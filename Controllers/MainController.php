@@ -8,10 +8,9 @@ class MainController{
     public function redirectToRoute($r){
         header("Location: router.php?r=" . $r);
     }
-    public function renderView($vista, $parametros = []){
-        extract($parametros);
-
-        require_once("Views/Layouts/header.php");
+    public function renderView($vista, $role = null){
+        
+        require_once("Views/Layouts/head.php");
         require_once($vista);
         require_once("Views/Layouts/footer.php");
     }

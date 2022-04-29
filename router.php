@@ -13,10 +13,11 @@ if(isset($_GET['r'])){
 
 require_once 'Controllers/LoginController.php';
 require_once 'Controllers/HomeController.php';
+require_once 'Controllers/DashboardController.php';
 
 $loginController = new LoginController();
 $homeController = new HomeController();
-
+$dashboardController = new DashboardController();
 switch($r){
     case 'auth/login':
         $loginController->Login();
@@ -26,6 +27,16 @@ switch($r){
         break;
     case 'home/index':
         $homeController->Index();
+        break;
+    case 'dashboard/admin':
+        $dashboardController->LoggedInView('admin');
+        break;
+    case 'dashboard/cliente':
+        $dashboardController->LoggedInView('cliente');
+        break;
+    case 'dashboard/funcionario':
+        $dashboardController->LoggedInView('funcionario');
+        break;
     default:
-        $loginController->Login();
+        $homeController->Index();
 }
