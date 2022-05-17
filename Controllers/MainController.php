@@ -5,12 +5,13 @@
 
 
 class MainController{
-    public function redirectToRoute($r){
-        header("Location: router.php?r=" . $r);
+    public function redirectToRoute($c, $a){
+        header("Location: router.php?c=" . $c. '&a='.$a);
     }
-    public function renderView($vista, $role = null){
+    public function renderView($vista, $parametros = []){
+        extract($parametros);
         
-        require_once("Views/Layouts/head.php");
+        require_once("Views/Layouts/header.php");
         require_once($vista);
         require_once("Views/Layouts/footer.php");
     }

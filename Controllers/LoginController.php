@@ -8,43 +8,40 @@ require_once("Controllers/MainController.php");
 require_once("Models/LoginModel.php");
 
 class LoginController extends MainController{
-    public function Login(){
-        
+    public function login(){
         $loginModel = new LoginModel();
-        
+        if($loginModel->isLoggedin()){
+            $currRole = $loginModel->findRole();
+            $this->redirectToRoute("dashboard", $currRole);
+        } 
         if(isset($_POST['username']) && isset($_POST['password'])){
 
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            if($loginModel->isLoggedin) $loginModel->Logout();
-
-            if($loginModel->CheckLogin($username, $password)){
-                switch($_SESSION['role']){
-                    case 'admin':
-                        $this->redirectToRoute("dashboard/admin");
-                        break;
-                    case 'cliente':
-                        $this->redirectToRoute("dashboard/cliente");
-                        break;
-                    case 'funcionario':
-                        $this->redirectToRoute("dashboard/funcionario");
-                        break;
-                }
+            if($loginModel->checkLogin($username, $password)){
+                $this->redirectToRoute("dashboard", $_SESSION['role']);
             }
         }
         $this->renderView("Views/Login/index.html");
     }
-    public function Logout(){
+    public function logout(){
         $loginModel = new LoginModel();
-        $loginModel->Logout();
-        $this->redirectToRoute('home/index');
+        $loginModel->logout();
+        $this->redirectToRoute('home', 'index');
     }
-    public function LoginFilter($role){
+    public function redirectIfLoggedIn(){
         $loginModel = new LoginModel();
-        if($loginModel->HasAccess($role) == false){    
-            $this->redirectToRoute('auth/login');
+        if($loginModel->isLoggedin()){
+            $currRole = $loginModel->findRole();
+            $this->redirectToRoute("dashboard", $currRole);
         } 
-        
+
+    }
+    public function loginFilter($role){
+        $loginModel = new LoginModel();
+        if($loginModel->hasAccess($role) == false){    
+            $this->redirectToRoute('auth', 'login');
+        }   
     } 
 }
