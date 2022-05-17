@@ -101,11 +101,11 @@ INSERT INTO produtos(descricao, preco, stock, iva_id) VALUES
 
 -- @block
 INSERT INTO users(username, password, email, telefone, NIF, morada, codPostal, localidade, role) VALUES
-    ('marco', '123', '987654321', '123321421', 'Rua da invenção', '2220-893', 'Lisboa', admin),
-    ('tomas', '123', '983454321', '132321421', 'Rua do teste', '2100-083', 'Aveiro', funcionario),
-    ('roberto', '123', '987633321', '123231421', 'Rua da avenida', '1200-113', 'Porto', funcionario),
-    ('diogo', '123', '987654444', '193121421', 'Rua da rua', '2220-111', 'Lisboa', cliente),
-    ('bernardo', '123', '981234321', '983321421', 'Avenida Central', '2999-911', 'Leiria', cliente),
-    ('pedro', '123', '981298621', '983321221', 'Avenida Junta', '3949-921', 'Evora', cliente);
+    ('marco', '123', 'marco@gmail.com', '987654321', '123321421', 'Rua da invenção', '2220-893', 'Lisboa', 'admin'),
+    ('tomas', '123', 'tomas@gmail.com', '983454321', '132321421', 'Rua do teste', '2100-083', 'Aveiro', 'funcionario'),
+    ('roberto', '123', 'roberto@gmail.com', '987633321', '123231421', 'Rua da avenida', '1200-113', 'Porto', 'funcionario'),
+    ('diogo', '123', 'diogo@gmail.com', '987654444', '193121421', 'Rua da rua', '2220-111', 'Lisboa', 'cliente'),
+    ('bernardo', '123', 'bernardo@gmail.com', '981234321', '983321421', 'Avenida Central', '2999-911', 'Leiria', 'cliente'),
+    ('pedro', '123', 'pedro@gmail.com', '981298621', '983321221', 'Avenida Junta', '3949-921', 'Evora', 'cliente');
 
 
