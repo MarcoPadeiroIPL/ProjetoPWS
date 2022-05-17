@@ -4,27 +4,23 @@
 //
 
 
-class LoginModel
+class LoginModel 
 {
     public function __construct(){
         session_start();
     }
 
     // Validação de credenciais
-    public function CheckLogin($username, $password){
+    public function checkLogin($username, $password){
         // TEMPORARIO: enquanto não existe ligação à base de dados
-        $users = array(
-            array('username' => 'admin', 'password' => '123', 'role' => 'admin'),
-            array('username' => 'func', 'password' => '123', 'role' => 'funcionario'),
-            array('username' => 'cliente', 'password' => '123', 'role' => 'cliente')
-        );
+        $users = Users::all();
 
         // faz a verificação das credenciais
         $res = false;
         foreach($users as $user){
-            if(($user['username'] == $username) && ($user['password'] == $password)){
+            if(($user->username == $username) && ($user->password == $password)){
                 $res = true;
-                $role = $user['role'];
+                $role = $user->role;
             }
         }
 
@@ -42,14 +38,17 @@ class LoginModel
         return isset($_SESSION['username']);
     }
     // Logout da sessão atual
-    public function Logout(){
+    public function logout(){
         session_destroy();
     }
 
-    public function HasAccess($checkRole){
-        if($checkRole == $_SESSION['role']){
-            return true;
-        }
-        return false;
+    public function hasAccess($checkRole){
+        return $checkRole == $_SESSION['role'];
     }
+    public function findRole(){
+        return $_SESSION['role'];
+    }
+
+    
+    
 }

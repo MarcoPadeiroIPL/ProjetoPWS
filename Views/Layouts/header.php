@@ -14,10 +14,10 @@
             <?php
                 if(isset($role) && ($role == 'admin' || $role == 'funcionario' || $role == 'cliente'))
                 {
-                    echo '<a class="navbar-brand" href="router.php?r=dashboard/'.$role.'">Fatura+</a>';
+                    echo '<a class="navbar-brand" href="router.php?c=dashboard&a='.$role.'">Fatura+</a>';
 
                 } else {
-                    echo '<a class="navbar-brand" href="router.php?r=home/index">Fatura+</a>';
+                    echo '<a class="navbar-brand" href="router.php?c=home&a=index">Fatura+</a>';
                 }
             ?>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -32,9 +32,9 @@
                         <?php
                             if(isset($role) && ($role == 'admin' || $role == 'funcionario' || $role == 'cliente'))
                             {
-                                echo '<a class="nav-link" href="router.php?r=auth/logout">Logout('.$role.')</a>';
+                                echo '<a class="nav-link" href="router.php?c=auth&a=logout">Logout('.$role.')</a>';
                             } else {
-                                echo '<a class="nav-link" href="router.php?r=auth/login">Login</a>';
+                                echo '<a class="nav-link" href="router.php?c=auth&a=login">Login</a>';
                             }
                         ?>
                     </li>

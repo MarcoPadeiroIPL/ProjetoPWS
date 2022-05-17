@@ -4,7 +4,7 @@
             <h1>Welcome to the dashboard!</h1>
         </div>
         <div class="row"> 
-            <p>Please <a href="router.php?r=auth/login">login</a> to continue!</p>
+            <p>Please <a href="router.php?c=auth&a=login">login</a> to continue!</p>
         </div>
     </div>
 </div>

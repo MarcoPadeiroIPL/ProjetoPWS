@@ -4,39 +4,44 @@
 //
 
 
-$r = ' ';
+$c = ' ';
+$a = ' ';
 
-
-if(isset($_GET['r'])){
-    $r = $_GET['r'];
+if(isset($_GET['c'])){
+    $c = $_GET['c'];
+}
+if(isset($_GET['a'])){
+    $a = $_GET['a'];
 }
 
 require_once 'Controllers/LoginController.php';
 require_once 'Controllers/HomeController.php';
 require_once 'Controllers/DashboardController.php';
+require_once 'startup/boot.php';
 
 $loginController = new LoginController();
 $homeController = new HomeController();
 $dashboardController = new DashboardController();
-switch($r){
-    case 'auth/login':
-        $loginController->Login();
+
+switch($c){
+    case 'home':
+        $homeController->index();
         break;
-    case 'auth/logout':
-        $loginController->Logout();
+    case 'auth':
+        switch($a){
+            case 'login':
+                $loginController->login();
+                break;
+            case 'logout':
+                $loginController->logout();
+                break;
+            default: $loginController->login();
+        }  
         break;
-    case 'home/index':
-        $homeController->Index();
+    case 'dashboard':
+        $dashboardController->loggedInView($a);
         break;
-    case 'dashboard/admin':
-        $dashboardController->LoggedInView('admin');
-        break;
-    case 'dashboard/cliente':
-        $dashboardController->LoggedInView('cliente');
-        break;
-    case 'dashboard/funcionario':
-        $dashboardController->LoggedInView('funcionario');
-        break;
-    default:
-        $homeController->Index();
+    default: $homeController->Index();
+    
+    
 }
