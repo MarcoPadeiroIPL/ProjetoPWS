@@ -38,9 +38,9 @@ class LoginController extends MainController{
         } 
 
     }
-    public function loginFilter($role){
+    public function loginFilter($role, $role2 = null){
         $loginModel = new LoginModel();
-        if($loginModel->hasAccess($role) == false){    
+        if(!$loginModel->hasAccess($role) && !$loginModel->hasAccess($role2)){    
             $this->redirectToRoute('auth', 'login');
         }   
     } 

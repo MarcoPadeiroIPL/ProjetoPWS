@@ -48,6 +48,9 @@ class LoginModel
     public function findRole(){
         return $_SESSION['role'];
     }
+    public function findUsername(){
+        return $_SESSION['username'];
+    }
 
     
     

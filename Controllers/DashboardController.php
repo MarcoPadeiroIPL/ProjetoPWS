@@ -9,7 +9,12 @@ class DashboardController extends MainController{
         $loginController->loginFilter($role);
         
         // caso esteja logado
-        $this->renderView("Views/Dashboard/$role.html", ['role' => $role]);
+        switch($role) { 
+            case 'cliente': $currRole='Cliente'; break;
+            case 'admin': $currRole='Admin'; break;
+            case 'funcionario': $currRole='Funcionario'; break;
+        }
+        $this->renderView("Views/$currRole/dashboard.html", ['role' => $role]);
     }
 
 }
