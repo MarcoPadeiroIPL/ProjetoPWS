@@ -1,3 +1,7 @@
+<?php 
+$loginModel = new LoginModel();
+$role = $loginModel->findRole();
+?>
 <!DOCTYPE html>
 <html lang="en">
 

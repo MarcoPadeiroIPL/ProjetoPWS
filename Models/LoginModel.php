@@ -7,7 +7,9 @@
 class LoginModel 
 {
     public function __construct(){
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     // Validação de credenciais
@@ -46,7 +48,11 @@ class LoginModel
         return $checkRole == $_SESSION['role'];
     }
     public function findRole(){
-        return $_SESSION['role'];
+        if(isset($_SESSION['role'])){
+            return $_SESSION['role'];
+        } else {
+            return 'null';
+        }
     }
     public function findUsername(){
         return $_SESSION['username'];

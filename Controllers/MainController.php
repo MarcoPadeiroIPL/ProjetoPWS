@@ -3,12 +3,14 @@
 // MainController.php é responsavel por conter funções basicas para alterar a rota e mudar a vista
 //
 
-
 class MainController{
     public function redirectToRoute($c, $a){
         header("Location: router.php?c=" . $c. '&a='.$a);
+        exit(0);
     }
     public function renderView($vista, $parametros = []){
+        $loginModel = new LoginModel();
+        array_push($parametros);
         extract($parametros);
         
         require_once("Views/Layouts/header.php");

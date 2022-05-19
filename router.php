@@ -23,14 +23,16 @@ require_once 'Controllers/LoginController.php';
 require_once 'Controllers/HomeController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/IvaController.php';
-require_once 'Controllers/FuncionarioController.php';
+require_once 'Controllers/ClienteController.php';
+require_once 'Controllers/ErrorController.php';
 require_once 'startup/boot.php';
 
 $loginController = new LoginController();
 $homeController = new HomeController();
 $dashboardController = new DashboardController();
 $ivaController = new IvaController();
-$funcionarioController = new FuncionarioController();
+$clienteController = new ClienteController();
+$errorController = new ErrorController();
 
 switch($c){
     case 'home':
@@ -48,9 +50,18 @@ switch($c){
         }  
         break;
     case 'dashboard':
+        $loginController->loginFilter([$a]);
         $dashboardController->loggedInView($a);
         break;
+    case 'error':
+        switch($a){
+            case 'noAccess':
+                $errorController->noAccess();
+                break;
+        }
+        break;
     case 'iva':
+        $loginController->loginFilter(['funcionario', 'admin']);
         switch($a){
             case 'index':
                 $ivaController->index();
@@ -76,15 +87,28 @@ switch($c){
         }
         break;
     case 'cliente':
+        $loginController->loginFilter(['funcionario', 'admin']);
         switch($a){
+            case 'show':
+                $clienteController->show($id);
+                break;
             case 'index':
-                $funcionarioController->index();
+                $clienteController->index();
                 break;
             case 'create':
-                $funcionarioController->create();
+                $clienteController->create();
                 break;
             case 'store':
-                $funcionarioController->store();
+                $clienteController->store();
+                break;
+            case 'edit':
+                $clienteController->edit($id);
+                break;
+            case 'update':
+                $clienteController->update($id);
+                break;
+            case 'delete':
+                $clienteController->delete($id);
                 break;
         }
         break;
