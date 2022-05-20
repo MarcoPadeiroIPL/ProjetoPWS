@@ -9,8 +9,6 @@ class MainController{
         exit(0);
     }
     public function renderView($vista, $parametros = []){
-        $loginModel = new LoginModel();
-        array_push($parametros);
         extract($parametros);
         
         require_once("Views/Layouts/header.php");

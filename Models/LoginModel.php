@@ -15,7 +15,7 @@ class LoginModel
     // Validação de credenciais
     public function checkLogin($username, $password){
         // TEMPORARIO: enquanto não existe ligação à base de dados
-        $users = Users::all();
+        $users = User::all();
 
         // faz a verificação das credenciais
         $res = false;

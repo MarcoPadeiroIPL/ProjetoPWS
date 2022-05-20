@@ -5,12 +5,12 @@ class IvaController extends MainController
 {
     public function index(){
 
-        $ivas = Ivas::all();
+        $ivas = Iva::all();
         $this->renderView('Views/Funcionario/IVA/index.php', ['ivas' => $ivas]);
     }
     public function show($id){
 
-        $ivas = Ivas::find([$id]);
+        $ivas = Iva::find([$id]);
         if(is_null($ivas))
         {
             echo 'Iva não existe';
@@ -23,7 +23,7 @@ class IvaController extends MainController
         $this->renderView('Views/Funcionario/IVA/create.php');
     }
     public function store(){
-        $iva = new Ivas($_POST);
+        $iva = new Iva($_POST);
         if($iva->is_valid()){
             $iva->save();
             $this->redirectToRoute('iva', 'index');
@@ -33,7 +33,7 @@ class IvaController extends MainController
     
     }
     public function edit($id){
-        $iva = Ivas::find([$id]);
+        $iva = Iva::find([$id]);
 
         if($iva->is_valid()){
             $this->renderView('Views/Funcionario/IVA/edit.php', ['iva' => $iva]);
@@ -42,7 +42,7 @@ class IvaController extends MainController
         }
     }
     public function update($id){
-        $iva = Ivas::find([$id]);
+        $iva = Iva::find([$id]);
         $iva->update_attributes($_POST);
         if($iva->is_valid()){
             $iva->save();
@@ -52,7 +52,7 @@ class IvaController extends MainController
         }
     }
     public function delete($id){
-        $iva = Ivas::find([$id]);
+        $iva = Iva::find([$id]);
         $iva->delete();
         $this->redirectToRoute('iva','index');
     }

@@ -25,6 +25,7 @@ require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/IvaController.php';
 require_once 'Controllers/ClienteController.php';
 require_once 'Controllers/ErrorController.php';
+require_once 'Controllers/ProdutoController.php';
 require_once 'startup/boot.php';
 
 $loginController = new LoginController();
@@ -32,6 +33,7 @@ $homeController = new HomeController();
 $dashboardController = new DashboardController();
 $ivaController = new IvaController();
 $clienteController = new ClienteController();
+$produtoController = new ProdutoController();
 $errorController = new ErrorController();
 
 switch($c){
@@ -109,6 +111,32 @@ switch($c){
                 break;
             case 'delete':
                 $clienteController->delete($id);
+                break;
+        }
+        break;
+    case 'produto':
+        $loginController->loginFilter(['funcionario', 'admin']);
+        switch($a){
+            case 'index':
+                $produtoController->index();
+                break;
+            case 'show':
+                $produtoController->show($id);
+                break;
+            case 'create':
+                $produtoController->create();
+                break;
+            case 'store':
+                $produtoController->store();
+                break;
+            case 'edit':
+                $produtoController->edit($id);
+                break;
+            case 'update':
+                $produtoController->update($id);
+                break;
+            case 'delete':
+                $produtoController->delete($id);
                 break;
         }
         break;

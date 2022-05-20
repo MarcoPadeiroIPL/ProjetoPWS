@@ -5,15 +5,15 @@ class ClienteController extends MainController
 {
     public function show($id){
 
-        $cliente = Users::find([$id]);
+        $cliente = User::find([$id]);
         $faturasDoCliente = array('conditions' => array('cliente_id = ?', $id));
-        $faturas = Faturas::all($faturasDoCliente);
+        $faturas = Fatura::all($faturasDoCliente);
         $this->renderView('Views/Funcionario/RegistoClientes/show.php', ['cliente' => $cliente, 'faturas' => $faturas]);
     }
     public function index(){
 
         $onlyClientes = array('conditions' => array('role = ?', 'cliente'));
-        $clientes = Users::all($onlyClientes); 
+        $clientes = User::all($onlyClientes); 
         $this->renderView('Views/Funcionario/RegistoClientes/index.php', ['clientes' => $clientes]);
     }
     public function create(){
@@ -21,7 +21,7 @@ class ClienteController extends MainController
         $this->renderView('Views/Funcionario/RegistoClientes/create.php');
     }
     public function store(){
-        $cliente = new Users($_POST);
+        $cliente = new User($_POST);
         if($cliente->is_valid()){
             $cliente->save();
             $this->redirectToRoute('cliente', 'index');
@@ -30,7 +30,7 @@ class ClienteController extends MainController
         }
     }
     public function edit($id){
-        $cliente = Users::find([$id]);
+        $cliente = User::find([$id]);
 
         if($cliente->is_valid()){
             $this->renderView('Views/Funcionario/RegistoClientes/edit.php', ['cliente' => $cliente]);
@@ -40,7 +40,7 @@ class ClienteController extends MainController
     }
     public function update($id){
 
-        $cliente = Users::find([$id]);
+        $cliente = User::find([$id]);
         $cliente->update_attributes($_POST);
         if($cliente->is_valid()){
             $cliente->save();
@@ -50,7 +50,7 @@ class ClienteController extends MainController
         }
     }
     public function delete($id){
-        $cliente = Users::find([$id]);
+        $cliente = User::find([$id]);
         $cliente->delete();
         $this->redirectToRoute('cliente','index');
     }

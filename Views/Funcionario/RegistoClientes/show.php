@@ -31,6 +31,8 @@
                 </tr>
             </tbody>
         </table>
+
+    </div>
         <table>
             <thead>
                 <th><h3>ID</h3></th>
@@ -55,7 +57,5 @@
 
             </tbody>
         </table>
-
-    </div>
     <a href="router.php?c=cliente&a=index">Voltar atras</a>
 </div> <!-- /row -->

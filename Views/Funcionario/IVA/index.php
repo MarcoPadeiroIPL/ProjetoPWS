@@ -9,7 +9,7 @@
             <tr>
             <td><?=$iva->id?></td>
             <td><?=$iva->descricao?></td>
-            <td><?=$iva->percentagem?></td>
+            <td><?=$iva->percentagem?>%</td>
             <td><?php if($iva->vigor == 1){ echo 'Sim'; } else { echo 'Não'; }  ?></td>
             <td>
                 <a href="router.php?c=iva&a=show&id=<?= $iva->id ?>" class="btn btn-info" role="button">Show</a>
