@@ -16,5 +16,8 @@ class Empresa extends ActiveRecord\Model{
     );
 
     // relações com outras tabelas
-    
+    static $has_many = array(
+        array('faturas'),
+        array('users')
+    );
 }

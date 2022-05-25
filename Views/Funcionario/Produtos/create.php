@@ -1,5 +1,5 @@
     <div class="container">
-        <h2>Create IVA</h2>
+        <h2>Create produto</h2>
         <form action="router.php?c=produto&a=store" method="post" class="needs-validation row justify-content-center" novalidate>
             <div class="col col-6">
                 <div class="mb-3">
@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Criar</button>
-                <a href="router.php?c=iva&a=index">Voltar atras</a>
+                <a href="router.php?c=produto&a=index">Voltar atras</a>
             </div>
         </form>
     </div>

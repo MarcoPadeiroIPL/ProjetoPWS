@@ -13,11 +13,10 @@ class LinhaFatura extends ActiveRecord\Model{
     );
     
     // relações com outras tabelas
-    static $has_many = array(
-        array('produtos')
+    static $has_one = array(
+        array('produto')
     );
     static $belongs_to = array(
         array('fatura'),
-        array('iva')
     );
 }

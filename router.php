@@ -26,6 +26,7 @@ require_once 'Controllers/IvaController.php';
 require_once 'Controllers/ClienteController.php';
 require_once 'Controllers/ErrorController.php';
 require_once 'Controllers/ProdutoController.php';
+require_once 'Controllers/FaturaController.php';
 require_once 'startup/boot.php';
 
 $loginController = new LoginController();
@@ -34,6 +35,7 @@ $dashboardController = new DashboardController();
 $ivaController = new IvaController();
 $clienteController = new ClienteController();
 $produtoController = new ProdutoController();
+$faturaController = new FaturaController();
 $errorController = new ErrorController();
 
 switch($c){
@@ -137,6 +139,23 @@ switch($c){
                 break;
             case 'delete':
                 $produtoController->delete($id);
+                break;
+        }
+        break;
+    case 'fatura':
+        $loginController->loginFilter(['funcionario', 'admin']);
+        switch($a){
+            case 'index':
+                $faturaController->index();
+                break;
+            case 'escolher':
+                $faturaController->escolherCliente();
+                break;
+            case 'emitir':
+                $faturaController->emitir();
+                break;
+            case 'show':
+                $faturaController->show($id);
                 break;
         }
         break;

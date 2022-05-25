@@ -1,7 +1,6 @@
 <?php
 
 require_once 'Controllers/MainController.php';
-require_once 'Controllers/LoginController.php';
 
 class DashboardController extends MainController{
     public function loggedInView($role){

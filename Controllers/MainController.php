@@ -4,8 +4,8 @@
 //
 
 class MainController{
-    public function redirectToRoute($c, $a){
-        header("Location: router.php?c=" . $c. '&a='.$a);
+    public function redirectToRoute($c, $a, $id = 0){
+        header("Location: router.php?c=" . $c. '&a='.$a . '&id='.$id);
         exit(0);
     }
     public function renderView($vista, $parametros = []){

@@ -5,17 +5,15 @@ class Fatura extends ActiveRecord\Model{
     
     // especificar os campos obrigatorios para a validação de um novo iva
     static $validates_presence_of = array (
-        array('data'),
-        array('valortotal'),
-        array('ivaTotal'),
-        array('estado'),
-        array('cliente_id', 'conditions' => array('role = ?' => 'cliente'), 'message' => 'It has to be a cliente'),
-        array('funcionario_id', 'conditions' => array('role = ? OR role = ?' => 'funcionario', 'admin'), 'message' => 'It has to be a funcionario')
+        array('estado')
     );
    
     // relações com outras tabelas
     static $has_many = array(
-        array('linhas_faturas', 'class_name' => 'LinhaFatura'),
-        array('users')
+        array('produtos')
+    );
+    static $belongs_to = array(
+        array('empresa'),
+        array('user')
     );
 }

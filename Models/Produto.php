@@ -17,5 +17,5 @@ class Produto extends ActiveRecord\Model{
         array('iva'),
         array('linha_fatura', 'class_name' => 'LinhaFatura')
     );
-
+    // has_many & has_one tem que ter um belongs_to do outro lado da chave estrangeira
 }
