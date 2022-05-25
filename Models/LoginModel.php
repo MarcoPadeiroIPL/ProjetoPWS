@@ -7,13 +7,15 @@
 class LoginModel 
 {
     public function __construct(){
-        session_start();
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     // Validação de credenciais
     public function checkLogin($username, $password){
         // TEMPORARIO: enquanto não existe ligação à base de dados
-        $users = Users::all();
+        $users = User::all();
 
         // faz a verificação das credenciais
         $res = false;
@@ -46,7 +48,14 @@ class LoginModel
         return $checkRole == $_SESSION['role'];
     }
     public function findRole(){
-        return $_SESSION['role'];
+        if(isset($_SESSION['role'])){
+            return $_SESSION['role'];
+        } else {
+            return 'null';
+        }
+    }
+    public function findUsername(){
+        return $_SESSION['username'];
     }
 
     
