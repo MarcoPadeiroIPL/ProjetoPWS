@@ -17,10 +17,10 @@ class User extends ActiveRecord\Model{
     );
 
     // relações com outras tabelas
-    static $has_many = array(
-        array('faturas')
-    );
     static $belongs_to = array(
-        array('empresa')
+        array('empresa'),
+    );
+    static $has_many = array(
+        array('faturas', 'foreign_key' => 'cliente_id')
     );
 }

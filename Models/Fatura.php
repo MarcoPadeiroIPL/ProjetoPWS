@@ -10,10 +10,12 @@ class Fatura extends ActiveRecord\Model{
    
     // relações com outras tabelas
     static $has_many = array(
-        array('produtos')
+        array('produtos'),
+        array('linhas', 'class_name' => 'LinhaFatura')
     );
     static $belongs_to = array(
         array('empresa'),
-        array('user')
+        array('cliente', 'class_name' => 'User', 'foreign_key' => 'cliente_id'),
+        array('funcionario', 'class_name' => 'User', 'foreign_key' => 'funcionario_id')
     );
 }

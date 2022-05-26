@@ -4,7 +4,6 @@ require_once 'Controllers/MainController.php';
 
 class DashboardController extends MainController{
     public function loggedInView($role){
-        
         // caso esteja logado
         switch($role) { 
             case 'cliente': $currRole='Cliente'; break;

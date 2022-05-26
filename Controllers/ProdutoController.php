@@ -24,7 +24,7 @@ class ProdutoController extends MainController
         $produto = new Produto($_POST);
         if($produto->is_valid()){
             $produto->save();
-            $this->redirectToRoute('produto', 'index');
+            $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
             $this->renderView('Views/Funcionario/Produtos/create.php');
         }
@@ -44,7 +44,7 @@ class ProdutoController extends MainController
         $produto->update_attributes($_POST);
         if($produto->is_valid()){
             $produto->save();
-            $this->redirectToRoute('produto','index');
+            $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
             $this->renderView('Views/Funcionario/Produtos/edit.php');
         }
@@ -52,6 +52,6 @@ class ProdutoController extends MainController
     public function delete($referencia){
         $produto = Produto::find([$referencia]);
         $produto->delete();
-        $this->redirectToRoute('produto','index');
+        $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
     }
 }

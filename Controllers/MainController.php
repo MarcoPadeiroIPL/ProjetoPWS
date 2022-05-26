@@ -4,8 +4,13 @@
 //
 
 class MainController{
-    public function redirectToRoute($c, $a, $id = 0){
-        header("Location: router.php?c=" . $c. '&a='.$a . '&id='.$id);
+    public function redirectToRoute($params = []){
+        $url = 'Location: router.php?';
+        foreach($params as $paramKey => $paramValue){
+            $url .= $paramKey != 'c' ? '&' : '';
+            $url .= $paramKey . '=' . $paramValue;
+        }
+        header($url);
         exit(0);
     }
     public function renderView($vista, $parametros = []){

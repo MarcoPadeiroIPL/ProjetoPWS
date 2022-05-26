@@ -14,8 +14,7 @@ class Produto extends ActiveRecord\Model{
         array('iva_id'),
     );
     static $belongs_to = array(
-        array('iva'),
-        array('linha_fatura', 'class_name' => 'LinhaFatura')
+        array('iva', 'foreign_key' => 'iva_id')
     );
     // has_many & has_one tem que ter um belongs_to do outro lado da chave estrangeira
 }

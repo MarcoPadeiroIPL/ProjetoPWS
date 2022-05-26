@@ -21,7 +21,7 @@ class LoginController extends MainController{
             $password = $_POST['password'];
 
             if($this->loginModel->checkLogin($username, $password)){
-                $this->redirectToRoute("dashboard", $_SESSION['role']);
+                $this->redirectToRoute(['c' => "dashboard", 'a' => $_SESSION['role']]);
             }
         }
         $this->renderView("Views/Login/index.html");
@@ -33,18 +33,18 @@ class LoginController extends MainController{
     public function redirectIfLoggedIn(){
         if($this->loginModel->isLoggedin()){
             $currRole = $this->loginModel->findRole();
-            $this->redirectToRoute("dashboard", $currRole);
+            $this->redirectToRoute(['c' => "dashboard", 'a' => $currRole]);
         } 
 
     }
     public function loginFilter($roles = []){
         if(!$this->loginModel->isLoggedin()){
-            $this->redirectToRoute('auth', 'login');
+            $this->redirectToRoute(['c' => 'auth', 'a' => 'login']);
         }
         foreach($roles as $role){
             // se não tiver acesso
             if($this->loginModel->hasAccess($role) == 1){ return 0; }
         }
-        $this->redirectToRoute('error', 'noAccess');
+        $this->redirectToRoute(['c' => 'error', 'a' => 'noAccess']);
     } 
 }

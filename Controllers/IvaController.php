@@ -26,7 +26,7 @@ class IvaController extends MainController
         $iva = new Iva($_POST);
         if($iva->is_valid()){
             $iva->save();
-            $this->redirectToRoute('iva', 'index');
+            $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {
             $this->renderView('Views/Funcionario/IVA/create.php');
         }
@@ -46,7 +46,7 @@ class IvaController extends MainController
         $iva->update_attributes($_POST);
         if($iva->is_valid()){
             $iva->save();
-            $this->redirectToRoute('iva','index');
+            $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {
             $this->renderView('Views/Funcionario/IVA/edit.php');
         }
@@ -54,6 +54,6 @@ class IvaController extends MainController
     public function delete($id){
         $iva = Iva::find([$id]);
         $iva->delete();
-        $this->redirectToRoute('iva','index');
+        $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
     }
 }

@@ -27,6 +27,7 @@ require_once 'Controllers/ClienteController.php';
 require_once 'Controllers/ErrorController.php';
 require_once 'Controllers/ProdutoController.php';
 require_once 'Controllers/FaturaController.php';
+require_once 'Controllers/FuncionarioController.php';
 require_once 'startup/boot.php';
 
 $loginController = new LoginController();
@@ -36,6 +37,7 @@ $ivaController = new IvaController();
 $clienteController = new ClienteController();
 $produtoController = new ProdutoController();
 $faturaController = new FaturaController();
+$funcionarioController = new FuncionarioController();
 $errorController = new ErrorController();
 
 switch($c){
@@ -143,19 +145,70 @@ switch($c){
         }
         break;
     case 'fatura':
-        $loginController->loginFilter(['funcionario', 'admin']);
         switch($a){
             case 'index':
+                $loginController->loginFilter(['cliente', 'funcionario', 'admin']);
                 $faturaController->index();
                 break;
             case 'escolher':
+                $loginController->loginFilter(['funcionario', 'admin']);
                 $faturaController->escolherCliente();
                 break;
+            case 'create':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $faturaController->create();
+                break;
+            case 'register':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $faturaController->register($id);
+                break;
+            case 'adicionarLinha':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $faturaController->adicionarLinha();
+                break;
             case 'emitir':
-                $faturaController->emitir();
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $faturaController->emitir($id);
                 break;
             case 'show':
+                $loginController->loginFilter(['cliente', 'funcionario', 'admin']);
                 $faturaController->show($id);
+                break;
+        }
+        break;
+    case 'funcionario':
+        switch($a){
+            case 'index':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->index();
+                break;
+            case 'show':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->show($id);
+                break;
+            case 'create':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->create();
+                break;
+            case 'store':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->store();
+                break;
+            case 'edit':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->edit($id);
+                break;
+            case 'atualizarPass':
+                $loginController->loginFilter(['funcionario']);
+                $funcionarioController->atualizarPass($id);
+                break;
+            case 'update':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $funcionarioController->update($id);
+                break;
+            case 'delete':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->delete($id);
                 break;
         }
         break;

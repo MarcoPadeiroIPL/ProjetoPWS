@@ -44,7 +44,7 @@
                 <th><h3>Funcionario</h3></th>
             </thead>
             <tbody>
-                <?php foreach($faturas as $fatura) { ?>
+                <?php var_dump($cliente->faturas); foreach($cliente->faturas as $fatura) { ?>
                     <td><?=$fatura->id?></td>
                     <td><?=$fatura->data?></td>
                     <td><?=$fatura->valortotal?></td>
@@ -52,7 +52,6 @@
                     <td><?=$fatura->estado?></td>
                     <td><?=$fatura->cliente_id?></td>
                     <td><?=$fatura->funcionario_id?></td>
-                    
                 <?php } ?>
 
             </tbody>
