@@ -1,10 +1,10 @@
     <div class="row min-wh-100 mt-0" style="    background-color:rgba(243,243,244,255);">
         <span class="fs-3">Faturas</span>
     </div>
-    <div class="row" style="height:95.3245%; background-color: #e8e8e9;">
-        <div class="row" style="margin-top: 5%;">
+    <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
+        <div class="row" style="margin-top: 5rem;">
             <div class="col-sm-12">
-                <a href="router.php?c=fatura&a=escolher"><button type="button" style="position: absolute;top: 10.5%; left:93.4%; transform: translate(-50%, -50%);"class="btn btn-primary">+ Nova Fatura</button></a>
+                <a href="router.php?c=fatura&a=escolher"><button type="button" style="position: absolute;top: 10.5vh; left:90.12vw; transform: translate(-50%, -50%);"class="btn btn-primary">+ Nova Fatura</button></a>
                 <table class="table table-stripped">
                     <thead class="table-dark">
                         <th style="border-radius: 10px 0 0 0;"><h3>ID</h3></th>
