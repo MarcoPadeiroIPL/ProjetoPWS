@@ -5,8 +5,8 @@ require_once 'vendor/autoload.php';
 // Criação de ligação à base de dados
 ActiveRecord\Config::initialize(function($cfg)
 {
-    $USER = 'root';
-    $PASS = '';
+    $USER = 'grupo_a';
+    $PASS = 'grupo_a_123';
     $SERVER = 'localhost';
     $DATABASE = 'ProjetoPWS_A';
 
