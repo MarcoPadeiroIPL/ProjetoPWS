@@ -115,5 +115,10 @@ class FaturaController extends MainController {
         
         $this->renderView('Views/Funcionario/Faturas/show.php', ['fatura' => $fatura, 'empresa' => $empresa]);
     }
+    public function delete($fatura_id){
+        $fatura = Fatura::find([$fatura_id]);
+        $fatura->delete();
+        $this->redirectToRoute(['c' => 'fatura', 'a' => 'index']);
+    }
    
 }

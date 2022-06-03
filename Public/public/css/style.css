@@ -1,0 +1,9 @@
+.item-nav{
+    height: 8%;
+}
+.item-nav:hover{
+    background-color: rgba(0, 0, 0, 0.686);
+}
+.selected{
+    background-color: gray;
+}

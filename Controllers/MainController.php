@@ -15,9 +15,16 @@ class MainController{
     }
     public function renderView($vista, $parametros = []){
         extract($parametros);
-        
-        require_once("Views/Layouts/header.php");
+        if($vista == 'Views/Home/index.php' || $vista == 'Views/Login/index.html'){
+            require_once("Views/Layouts/header.php");
+        } else {
+            require_once('Views/Layouts/sidebar.php');
+        } 
         require_once($vista);
-        require_once("Views/Layouts/footer.php");
+        if($vista == "Views/Home/index.php" || $vista == 'Views/Login/index.html'){
+            require_once("Views/Layouts/footer.php");
+        } else {
+            require_once('Views/Layouts/footerSidebar.php');
+        } 
     }
 }

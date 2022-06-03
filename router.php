@@ -174,6 +174,11 @@ switch($c){
                 $loginController->loginFilter(['cliente', 'funcionario', 'admin']);
                 $faturaController->show($id);
                 break;
+            case 'delete':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $faturaController->delete($id);
+                break;
+
         }
         break;
     case 'funcionario':

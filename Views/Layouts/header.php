@@ -14,17 +14,9 @@ $role = $loginModel->findRole();
 </head>
 
 <body >
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <div class="container-fluid">
-            <?php
-                if(isset($role) && ($role == 'admin' || $role == 'funcionario' || $role == 'cliente'))
-                {
-                    echo '<a class="navbar-brand" href="router.php?c=dashboard&a='.$role.'">Fatura+</a>';
-
-                } else {
-                    echo '<a class="navbar-brand" href="router.php?c=home&a=index">Fatura+</a>';
-                }
-            ?>
+            <a class="navbar-brand text-white" href="router.php?c=home">Fatura+</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -37,9 +29,9 @@ $role = $loginModel->findRole();
                         <?php
                             if(isset($role) && ($role == 'admin' || $role == 'funcionario' || $role == 'cliente'))
                             {
-                                echo '<a class="nav-link" href="router.php?c=auth&a=logout">Logout('.$role.')</a>';
+                                echo '<a class="nav-link text-white" href="router.php?c=auth&a=logout">Logout('.$role.')</a>';
                             } else {
-                                echo '<a class="nav-link" href="router.php?c=auth&a=login">Login</a>';
+                                echo '<a class="nav-link text-white" href="router.php?c=auth&a=login">Login</a>';
                             }
                         ?>
                     </li>

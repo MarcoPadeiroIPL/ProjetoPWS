@@ -28,7 +28,7 @@ class LoginController extends MainController{
     }
     public function logout(){
         $this->loginModel->logout();
-        $this->redirectToRoute('home', 'index');
+        $this->redirectToRoute(['c' => 'home']);
     }
     public function redirectIfLoggedIn(){
         if($this->loginModel->isLoggedin()){
