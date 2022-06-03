@@ -1,12 +1,13 @@
--- @block
+-- @block Criação da base de dados
 DROP DATABASE IF EXISTS ProjetoPWS_A;
 CREATE DATABASE ProjetoPWS_A;
 USE ProjetoPWS_A;
 
+-- @block Criação de um utilizador especifico para aceder à base de dados
 CREATE USER 'grupo_a'@'localhost' IDENTIFIED BY 'grupo_a_123';
 GRANT ALL PRIVILEGES ON ProjetoPWS_A.* TO 'grupo_a'@'localhost';
 
--- @block
+-- @block Criação da tabela 'empresas'
 CREATE TABLE IF NOT EXISTS empresas(
     id              INT             NOT NULL        AUTO_INCREMENT,
     designSocial    varchar(30)     NOT NULL,
@@ -20,7 +21,7 @@ CREATE TABLE IF NOT EXISTS empresas(
     CONSTRAINT pk_empresas_id PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- @block
+-- @block Criação da tabela 'users'
 CREATE TABLE IF NOT EXISTS users(
     id              INT             NOT NULL        AUTO_INCREMENT,
     username        VARCHAR(50)     NOT NULL        UNIQUE,
@@ -36,7 +37,7 @@ CREATE TABLE IF NOT EXISTS users(
     CONSTRAINT pk_users_id PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- @block
+-- @block Criação da tabela 'ivas'
 CREATE TABLE IF NOT EXISTS ivas(
     id              INT             NOT NULL        AUTO_INCREMENT,
     percentagem     INT             NOT NULL,
@@ -45,7 +46,7 @@ CREATE TABLE IF NOT EXISTS ivas(
     CONSTRAINT pk_ivas_id PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- @block
+-- @block Criação da tabela 'produtos'
 CREATE TABLE IF NOT EXISTS produtos(
     referencia      INT             NOT NULL        AUTO_INCREMENT,
     descricao       TEXT            NOT NULL,
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS produtos(
     CONSTRAINT pk_produtos_iva_id FOREIGN KEY(iva_id) REFERENCES ivas(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- @block
+-- @block Criação da tabela 'faturas'
 CREATE TABLE IF NOT EXISTS faturas(
     id              INT             AUTO_INCREMENT,
     data            DATETIME        ,
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS faturas(
     CONSTRAINT pk_faturas_funcionario_id FOREIGN KEY(funcionario_id) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- @block
+-- @block Criação da tabela 'linhas_faturas'
 CREATE TABLE IF NOT EXISTS linhas_faturas(
     id              INT             AUTO_INCREMENT,
     quantidade      INT             NOT NULL,
