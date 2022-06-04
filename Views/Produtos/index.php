@@ -4,9 +4,9 @@
     <div class="row" style="height:95.3245%; background-color: #e8e8e9;">
         <div class="row" style="margin-top: 5%;">
             <div class="col-sm-12">
-                <a href="router.php?c=fatura&a=escolher"><button type="button" style="position: absolute;top: 10.5%; left:92.7%; transform: translate(-50%, -50%);"class="btn btn-primary">+ Novo Produto</button></a>
+                <a href="router.php?c=produto&a=create"><button type="button" style="float:right; margin-bottom:2vh"class="btn bg-dark text-white">+ Nova Fatura</button></a>
                 <table class="table table-stripped">
-                    <thead class="table-dark">
+                    <thead class="table-dark" style="position: sticky; top:0">
                         <th style="border-radius: 10px 0 0 0;"><h3>Referencia</h3></th>
                         <th><h3>Descrição</h3></th>
                         <th><h3>Preço</h3></th>

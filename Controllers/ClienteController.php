@@ -5,15 +5,15 @@ class ClienteController extends MainController
 {
     public function show($id){
         $cliente = User::find([$id]);
-        $this->renderView('Views/RegistoClientes/show.php', ['cliente' => $cliente]);
+        $this->renderView('Clientes', 'show.php', ['cliente' => $cliente]);
     }
     public function index(){
         $clientes = User::all(array('conditions' => array('role = ?','cliente')));
-        $this->renderView('Views/RegistoClientes/index.php', ['clientes' => $clientes]);
+        $this->renderView('Clientes', 'index.php', ['clientes' => $clientes]);
     }
     public function create(){
         // redireciona para vista para criar um novo
-        $this->renderView('Views/RegistoClientes/create.php');
+        $this->renderView('Clientes', 'create.php');
     }
     public function store(){
         $cliente = new User($_POST);
@@ -23,16 +23,16 @@ class ClienteController extends MainController
             $cliente->save();
             $this->redirectToRoute(['c'=>'cliente', 'a'=>'index']);
         } else {
-            $this->renderView('Views/RegistoClientes/create.php');
+            $this->renderView('Clientes', 'create.php');
         }
     }
     public function edit($id){
         $cliente = User::find([$id]);
 
         if($cliente->is_valid()){
-            $this->renderView('Views/RegistoClientes/edit.php', ['cliente' => $cliente]);
+            $this->renderView('Clientes', 'edit.php', ['cliente' => $cliente]);
         } else {
-            $this->renderView('Views/RegistoClientes/index.php');
+            $this->renderView('Clientes', 'index.php');
         }
     }
     public function update($id){
@@ -44,7 +44,7 @@ class ClienteController extends MainController
             $cliente->save();
             $this->redirectToRoute(['c' => 'cliente', 'a' => 'index']);
         } else {
-            $this->renderView('Views/RegistoClientes/edit.php');
+            $this->renderView('Clientes', 'edit.php');
         }
     }
     public function delete($id){

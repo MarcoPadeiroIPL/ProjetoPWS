@@ -28,6 +28,7 @@ require_once 'Controllers/ErrorController.php';
 require_once 'Controllers/ProdutoController.php';
 require_once 'Controllers/FaturaController.php';
 require_once 'Controllers/FuncionarioController.php';
+require_once 'Controllers/EmpresaController.php';
 require_once 'startup/boot.php';
 
 $loginController = new LoginController();
@@ -38,6 +39,7 @@ $clienteController = new ClienteController();
 $produtoController = new ProdutoController();
 $faturaController = new FaturaController();
 $funcionarioController = new FuncionarioController();
+$empresaController = new EmpresaController();
 $errorController = new ErrorController();
 
 switch($c){
@@ -214,6 +216,20 @@ switch($c){
             case 'delete':
                 $loginController->loginFilter(['admin']);
                 $funcionarioController->delete($id);
+                break;
+        }
+        break;
+    case 'empresa':
+        $loginController->loginFilter(['admin', 'funcionario']);
+        switch($a){
+            case 'show':
+                $empresaController->show($id);
+                break;
+            case 'edit':
+                $empresaController->edit($id);
+                break;
+            case 'update':
+                $empresaController->update($id);
                 break;
         }
         break;

@@ -6,7 +6,7 @@ class IvaController extends MainController
     public function index(){
 
         $ivas = Iva::all();
-        $this->renderView('Views/IVA/index.php', ['ivas' => $ivas]);
+        $this->renderView('IVA', 'index.php', ['ivas' => $ivas]);
     }
     public function show($id){
 
@@ -15,12 +15,12 @@ class IvaController extends MainController
         {
             echo 'Iva não existe';
         } else {
-            $this->renderView('Views/IVA/show.php', ['iva' => $ivas]);
+            $this->renderView('IVA', 'show.php', ['iva' => $ivas]);
         }
     }
     public function create(){
         // redireciona para vista para criar um novo
-        $this->renderView('Views/IVA/create.php');
+        $this->renderView('IVA', 'create.php');
     }
     public function store(){
         $iva = new Iva($_POST);
@@ -28,7 +28,7 @@ class IvaController extends MainController
             $iva->save();
             $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {
-            $this->renderView('Views/IVA/create.php');
+            $this->renderView('IVA', 'create.php');
         }
     
     }
@@ -36,9 +36,9 @@ class IvaController extends MainController
         $iva = Iva::find([$id]);
 
         if($iva->is_valid()){
-            $this->renderView('Views/IVA/edit.php', ['iva' => $iva]);
+            $this->renderView('IVA', 'edit.php', ['iva' => $iva]);
         } else {
-            $this->renderView('Views/IVA/index.php');
+            $this->renderView('IVA', 'index.php');
         }
     }
     public function update($id){
@@ -48,7 +48,7 @@ class IvaController extends MainController
             $iva->save();
             $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {
-            $this->renderView('Views/IVA/edit.php');
+            $this->renderView('IVA', 'edit.php');
         }
     }
     public function delete($id){

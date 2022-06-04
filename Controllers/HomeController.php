@@ -14,6 +14,6 @@ class HomeController extends MainController {
         $loginController = new LoginController();
         $loginController->redirectIfLoggedIn();
 
-        $this->renderView("Views/Home/index.php");
+        $this->renderView('Home', 'index.php');
     }
 }

@@ -4,8 +4,8 @@
 //
 
 
-require_once("Controllers/MainController.php");
-require_once("Models/LoginModel.php");
+require_once('Controllers/MainController.php');
+require_once('Models/LoginModel.php');
 
 class LoginController extends MainController{
     private $loginModel;
@@ -21,10 +21,10 @@ class LoginController extends MainController{
             $password = $_POST['password'];
 
             if($this->loginModel->checkLogin($username, $password)){
-                $this->redirectToRoute(['c' => "dashboard", 'a' => $_SESSION['role']]);
+                $this->redirectToRoute(['c' => 'dashboard', 'a' => $_SESSION['role']]);
             }
         }
-        $this->renderView("Views/Login/index.html");
+        $this->renderView('Login', 'index.html');
     }
     public function logout(){
         $this->loginModel->logout();
@@ -33,7 +33,7 @@ class LoginController extends MainController{
     public function redirectIfLoggedIn(){
         if($this->loginModel->isLoggedin()){
             $currRole = $this->loginModel->findRole();
-            $this->redirectToRoute(['c' => "dashboard", 'a' => $currRole]);
+            $this->redirectToRoute(['c' => 'dashboard', 'a' => $currRole]);
         } 
 
     }

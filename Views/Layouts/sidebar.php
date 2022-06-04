@@ -19,30 +19,30 @@ $user = $loginModel->findUsername();
    <div class="container-fluid">
     <div class="row flex-nowrap">
         <div class="col-auto bg-dark d-flex flex-column min-vh-100" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
-            <div class="row d-flex flex-column " style="height:93vh; ">
+            <div class="row d-flex flex-column " style="height:93vh;">
                 <div class="row text-white p-4"><h1 class="display-2">Fatura+</h1></div>
-                <a href="router.php?c=home" style="height:8%;" onclick="ModificarClass('dashboard')" id="dashboard" class="item-nav text-decoration-none pt-3 selected">
+                <a href="router.php?c=home" style="height:8%;" id="dashboard" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Home'){echo 'selected';}?>">
                     <div class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-speedometer"></i> <span class="ms-2 d-none d-sm-inline">Dashboard</span></span></div>
                 </a>
-                <a href="router.php?c=fatura&a=index" onclick="ModificarClass('fatura')" id="fatura" class="item-nav text-decoration-none pt-3">
+                <a href="router.php?c=fatura&a=index" id="fatura" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Faturas'){echo 'selected';}?>">
                     <div  class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-receipt-cutoff"></i> <span class="ms-2 d-none d-sm-inline">Faturas</span></span></div>
                 </a>
                 <?php if($role != 'cliente'){ ?>
-                <a href="router.php?c=iva&a=index" onclick="ModificarClass('iva')" id="iva" class="item-nav text-decoration-none pt-3">
+                <a href="router.php?c=iva&a=index" id="iva" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'IVA'){echo 'selected';}?>">
                     <div  class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-percent"></i> <span class="ms-2 d-none d-sm-inline">IVA</span></span></div>
                 </a>
-                <a href="router.php?c=produto&a=index" onclick="ModificarClass('produtos')" id="produtos" class="item-nav text-decoration-none pt-3">
+                <a href="router.php?c=produto&a=index" id="produtos" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Produtos'){echo 'selected';}?>">
                     <div  class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-cart3"></i> <span class="ms-2 d-none d-sm-inline">Produtos</span></span></div>
                 </a>
-                <a href="router.php?c=empresa&a=index"  onclick="ModificarClass('empresa')" id="empresa" class="item-nav text-decoration-none pt-3">
+                <a href="router.php?c=empresa&a=show&id=1"  id="empresa" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Empresa'){echo 'selected';}?>">
                     <div  class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-building"></i> <span class="ms-2 d-none d-sm-inline">Empresa</span></span></div>
                 </a>
-                <a href="router.php?c=cliente&a=index" onclick="ModificarClass('clientes')" id="clientes" class="item-nav text-decoration-none pt-3">
+                <a href="router.php?c=cliente&a=index" id="clientes" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Clientes'){echo 'selected';}?>">
                     <div class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-people-fill"></i> <span class="ms-2 d-none d-sm-inline">Clientes</span></span></div>
                 </a>
@@ -50,7 +50,7 @@ $user = $loginModel->findUsername();
                     <div class="row" style="height: 32%"></div>
                 <?php } ?>
                 <?php if($role == 'admin') { ?>
-                <a href="router.php?c=funcionario&a=index"  onclick="ModificarClass('funcionarios')" id="funcionarios" class="item-nav text-decoration-none pt-3">
+                <a href="router.php?c=funcionario&a=index"  id="funcionarios" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Funcionarios'){echo 'selected';}?>">
                     <div  class="row text-white px-4 fs-4 text-decoration-none">
                     <span><i class="bi bi-person-square"></i> <span class="ms-2 d-none d-sm-inline">Funcionarios</span></span></div>
                 </a> 
@@ -75,27 +75,3 @@ $user = $loginModel->findUsername();
         </div>
 
         <div class="col">
-<script>
-    function ModificarClass(item){
-        var itemSelecionado = document.getElementById(item);
-
-        var itens = [
-            document.getElementById("dashboard"),
-            document.getElementById("fatura"),
-            document.getElementById("iva"),
-            document.getElementById("produtos"),
-            document.getElementById("empresa"),
-            document.getElementById("clientes"),
-            document.getElementById("funcionarios")
-        ]
-
-        for(i = 0; i < itens.length; i++){
-            itens[i].classList.remove('selected');
-            if(itens[i] == itemSelecionado){
-                itens[i].classList.add('selected');
-            }
-        }
-
-
-    }
-</script>

@@ -5,7 +5,7 @@ class ProdutoController extends MainController
 {
     public function index(){
         $produtos = Produto::all();
-        $this->renderView('Views/Produtos/index.php', ['produtos' => $produtos]);
+        $this->renderView('Produtos', 'index.php', ['produtos' => $produtos]);
     }
     public function show($referencia){
         $produtos = Produto::find([$referencia]);
@@ -13,12 +13,12 @@ class ProdutoController extends MainController
         {
             echo 'Iva não existe';
         } else {
-            $this->renderView('Views/Produtos/show.php', ['produto' => $produtos]);
+            $this->renderView('Produtos', 'show.php', ['produto' => $produtos]);
         }
     }
     public function create(){
         // redireciona para vista para criar um novo
-        $this->renderView('Views/Produtos/create.php');
+        $this->renderView('Produtos', 'create.php');
     }
     public function store(){
         $produto = new Produto($_POST);
@@ -26,7 +26,7 @@ class ProdutoController extends MainController
             $produto->save();
             $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
-            $this->renderView('Views/Produtos/create.php');
+            $this->renderView('Produtos', 'create.php');
         }
     
     }
@@ -34,9 +34,9 @@ class ProdutoController extends MainController
         $produto = Produto::find([$referencia]);
 
         if($produto->is_valid()){
-            $this->renderView('Views/Produtos/edit.php', ['produto' => $produto]);
+            $this->renderView('Produtos', 'edit.php', ['produto' => $produto]);
         } else {
-            $this->renderView('Views/Produtos/index.php');
+            $this->renderView('Produtos', 'index.php');
         }
     }
     public function update($referencia){
@@ -46,7 +46,7 @@ class ProdutoController extends MainController
             $produto->save();
             $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
-            $this->renderView('Views/Produtos/edit.php');
+            $this->renderView('Produtos', 'edit.php');
         }
     }
     public function delete($referencia){

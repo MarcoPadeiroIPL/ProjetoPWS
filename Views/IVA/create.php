@@ -10,7 +10,7 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="inputPercentagem" class="form-label">Percentagem:</label>
+                    <label for="inputPercentagem" class="form-label">Percentagem (%):</label>
                     <input type="text" class="form-control" id="inputPercentagem" name="percentagem" required>
                     <div class="invalid-feedback">
                         Campo obrigatório!
@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary">Criar</button>
-                <a href="router.php?c=iva&a=index">Voltar atras</a>
+                <a href="router.php?c=iva&a=index">Cancelar</a>
             </div>
         </form>
     </div>

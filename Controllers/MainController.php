@@ -13,15 +13,15 @@ class MainController{
         header($url);
         exit(0);
     }
-    public function renderView($vista, $parametros = []){
+    public function renderView($pasta, $ficheiro, $parametros = []){
         extract($parametros);
-        if($vista == 'Views/Home/index.php' || $vista == 'Views/Login/index.html'){
+        if(($pasta == 'Home' && $ficheiro == 'index.php' || $pasta == 'Login' && $ficheiro == 'index.html')){
             require_once("Views/Layouts/header.php");
         } else {
             require_once('Views/Layouts/sidebar.php');
         } 
-        require_once($vista);
-        if($vista == "Views/Home/index.php" || $vista == 'Views/Login/index.html'){
+        require_once("Views/" . $pasta . "/" . $ficheiro);
+        if(($pasta == 'Home' && $ficheiro == 'index.php' || $pasta == 'Login' && $ficheiro == 'index.html')){
             require_once("Views/Layouts/footer.php");
         } else {
             require_once('Views/Layouts/footerSidebar.php');
