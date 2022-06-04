@@ -11,11 +11,11 @@ class FaturaController extends MainController {
             $cliente = User::find(array('conditions' => array('username = ?', $loginModel->findUsername()))); 
             $faturas = Fatura::all(array('conditions' => array('cliente_id = ?', $cliente->id)));
         }
-        $this->renderView('Views/Funcionario/Faturas/index.php', ['faturas' => $faturas]);
+        $this->renderView('Views/Faturas/index.php', ['faturas' => $faturas]);
     }
     public function escolherCliente(){
         $clientes = User::all(array('conditions' => array('role = ?', 'cliente')));
-        $this->renderView('Views/Funcionario/Faturas/escolherCliente.php', ['clientes' => $clientes]);
+        $this->renderView('Views/Faturas/escolherCliente.php', ['clientes' => $clientes]);
     }
     public function create(){
         $loginModel = new LoginModel();
@@ -43,7 +43,7 @@ class FaturaController extends MainController {
     public function register($fatura_id){
         $fatura = Fatura::find([$fatura_id]);
         $produtos = Produto::all();
-        $this->renderView('Views/Funcionario/Faturas/registar.php', ['produtos' => $produtos, 'fatura' => $fatura]);
+        $this->renderView('Views/Faturas/registar.php', ['produtos' => $produtos, 'fatura' => $fatura]);
     }
     public function adicionarLinha(){
         $linha = new LinhaFatura($_POST);
@@ -74,7 +74,7 @@ class FaturaController extends MainController {
                 }
                 $faturax = Fatura::find([$linha->fatura_id]);
                 $produtos = Produto::all(array('conditions' => array('stock > 0')));
-                $this->renderView('Views/Funcionario/Faturas/registar.php', ['produtos'=>$produtos, 'fatura' => $faturax]);
+                $this->renderView('Views/Faturas/registar.php', ['produtos'=>$produtos, 'fatura' => $faturax]);
             } else {
                 echo 'Não há stock';
             // erro
@@ -113,7 +113,7 @@ class FaturaController extends MainController {
         $empresa = Empresa::find([1]);
         // vai buscar as linhas que pertencem a esta fatura
         
-        $this->renderView('Views/Funcionario/Faturas/show.php', ['fatura' => $fatura, 'empresa' => $empresa]);
+        $this->renderView('Views/Faturas/show.php', ['fatura' => $fatura, 'empresa' => $empresa]);
     }
     public function delete($fatura_id){
         $fatura = Fatura::find([$fatura_id]);

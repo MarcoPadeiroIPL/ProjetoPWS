@@ -21,8 +21,8 @@
                         <tr>
                             <td><?=$fatura->id?></td>
                             <td><?=$fatura->data?></td>
-                            <td><?=$fatura->valortotal?></td>
-                            <td><?=$fatura->ivatotal?></td>
+                            <td><?=$fatura->valortotal?>€</td>
+                            <td><?=$fatura->ivatotal?>€</td>
                             <td><?=$fatura->estado?></td>
                             <td><?=$fatura->cliente->username?></td>
                             <td><?=$fatura->funcionario->username?></td>

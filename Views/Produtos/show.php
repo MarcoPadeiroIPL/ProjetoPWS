@@ -16,7 +16,7 @@
             <tr>
                 <td><?=$produto->referencia?></td>
                 <td><?=$produto->descricao?></td>
-                <td><?=$produto->preco?></td>
+                <td><?=$produto->preco?>€</td>
                 <td><?=$produto->stock?></td>
                 <td><?=$produto->iva_id?></td>
             </tr>

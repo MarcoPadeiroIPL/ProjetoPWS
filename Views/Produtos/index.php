@@ -20,7 +20,7 @@
                         <tr>
                             <td><?=$produto->referencia?></td>
                             <td><?=$produto->descricao?></td>
-                            <td><?=$produto->preco?></td>
+                            <td><?=$produto->preco?>€</td>
                             <td><?=$produto->stock?></td>
                             <td><?=$produto->iva->descricao?></td>
                             <td><?=$produto->iva->percentagem?>%</td>
