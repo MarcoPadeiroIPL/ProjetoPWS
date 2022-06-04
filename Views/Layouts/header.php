@@ -1,7 +1,3 @@
-<?php 
-$loginModel = new LoginModel();
-$role = $loginModel->findRole();
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +9,7 @@ $role = $loginModel->findRole();
     <link href="Public/public/style.css" rel="stylesheet">
 </head>
 
-<body >
+<body>
     <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand text-white" href="router.php?c=home">Fatura+</a>
@@ -26,14 +22,7 @@ $role = $loginModel->findRole();
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <?php
-                            if(isset($role) && ($role == 'admin' || $role == 'funcionario' || $role == 'cliente'))
-                            {
-                                echo '<a class="nav-link text-white" href="router.php?c=auth&a=logout">Logout('.$role.')</a>';
-                            } else {
-                                echo '<a class="nav-link text-white" href="router.php?c=auth&a=login">Login</a>';
-                            }
-                        ?>
+                        <a class="nav-link text-white" href="router.php?c=auth&a=login">Login</a>
                     </li>
                 </ul>
             </div>

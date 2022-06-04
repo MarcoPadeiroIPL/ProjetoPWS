@@ -15,12 +15,16 @@ class MainController{
     }
     public function renderView($pasta, $ficheiro, $parametros = []){
         extract($parametros);
-        if(($pasta == 'Home' && $ficheiro == 'index.php' || $pasta == 'Login' && $ficheiro == 'index.html')){
+        if($pasta == 'Login' && $ficheiro == 'index.php'){
+            require_once("Views/Layouts/headerLogin.php");
+        } else if($pasta == 'Home' && $ficheiro == 'index.php'){
             require_once("Views/Layouts/header.php");
         } else {
             require_once('Views/Layouts/sidebar.php');
         } 
+
         require_once("Views/" . $pasta . "/" . $ficheiro);
+        
         if(($pasta == 'Home' && $ficheiro == 'index.php' || $pasta == 'Login' && $ficheiro == 'index.html')){
             require_once("Views/Layouts/footer.php");
         } else {

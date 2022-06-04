@@ -18,7 +18,7 @@ $user = $loginModel->findUsername();
 <body>
    <div class="container-fluid">
     <div class="row flex-nowrap">
-        <div class="col-auto bg-dark d-flex flex-column min-vh-100" style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+        <div class="col-auto bg-dark d-flex flex-column min-vh-100" >
             <div class="row d-flex flex-column " style="height:93vh;">
                 <div class="row text-white p-4"><h1 class="display-2">Fatura+</h1></div>
                 <a href="router.php?c=home" style="height:8%;" id="dashboard" class="item-nav text-decoration-none pt-3 <?php if($pasta == 'Home'){echo 'selected';}?>">

@@ -24,7 +24,7 @@ class LoginController extends MainController{
                 $this->redirectToRoute(['c' => 'dashboard', 'a' => $_SESSION['role']]);
             }
         }
-        $this->renderView('Login', 'index.html');
+        $this->renderView('Login', 'index.php');
     }
     public function logout(){
         $this->loginModel->logout();
