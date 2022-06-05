@@ -26,7 +26,7 @@
         border: none;
     }
 </style>
-<div class="container-fluid" style="width:874px; border: 1px solid black;">
+<div class="container-fluid shadow-lg" style="width:874px; border: 1px solid black;">
     <div class="row" style="padding:30px">
         <div class="col-2" style="display: table;">
             <div style="display:table-cell; vertical-align:middle;">
@@ -38,8 +38,8 @@
             <div class="row" style="text-align:right;"><span><?=$empresa->designsocial?></span></div>
             <div class="row" style="text-align:right;"><span><?=$empresa->morada?></span></div>
             <div class="row" style="text-align:right;"><span><?=$empresa->codpostal?>, <?=$empresa->localidade?></span></div>
-            <div class="row" style="text-align:right;"><span><?=$empresa->email?>, <?=$empresa->telefone?></span></div>
-            <div class="row" style="text-align:right;"><span><?=$empresa->nif?></span></div>
+            <div class="row" style="text-align:right;"><span><?=$empresa->email?>, tlf: <?=$empresa->telefone?></span></div>
+            <div class="row" style="text-align:right;"><span>NIF: <?=$empresa->nif?></span></div>
         </div>
     </div>
     <div class="row" style="padding-left:30px; padding-right:30px">
@@ -58,7 +58,7 @@
         </div>
         <div class="col" style="display: table;">
             <div style="display:table-cell; vertical-align:middle;">
-                Data de emissão: <?=$fatura->data?>
+                Data de emissão: <?=date("d/m/Y", strtotime($fatura->data))?>
             </div>
         </div>
     </div>

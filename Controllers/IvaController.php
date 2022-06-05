@@ -6,7 +6,7 @@ class IvaController extends MainController
     public function index(){
 
         $ivas = Iva::all();
-        $this->renderView('IVA', 'index.php', ['ivas' => $ivas]);
+        $this->renderView('IVA', 'index.php', ['ivas' => $ivas, 'pesquisa' => false]);
     }
     public function show($id){
 
@@ -55,5 +55,9 @@ class IvaController extends MainController
         $iva = Iva::find([$id]);
         $iva->delete();
         $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
+    }
+    public function search($parametros){
+        $resultado = Iva::all(array('conditions' => array('descricao LIKE ? OR id = ?', '%'.$parametros['pesquisa'].'%', $parametros['pesquisa'])));
+        $this->renderView('IVA', 'index.php', ['ivas' => $resultado, 'pesquisa' => true]);
     }
 }

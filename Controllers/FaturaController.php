@@ -11,7 +11,7 @@ class FaturaController extends MainController {
             $cliente = User::find(array('conditions' => array('username = ?', $loginModel->findUsername()))); 
             $faturas = Fatura::all(array('conditions' => array('cliente_id = ?', $cliente->id)));
         }
-        $this->renderView('Faturas', 'index.php', ['faturas' => $faturas]);
+        $this->renderView('Faturas', 'index.php', ['faturas' => $faturas, 'pesquisa' => false]);
     }
     public function escolherCliente(){
         $clientes = User::all(array('conditions' => array('role = ?', 'cliente')));
@@ -119,6 +119,13 @@ class FaturaController extends MainController {
         $fatura = Fatura::find([$fatura_id]);
         $fatura->delete();
         $this->redirectToRoute(['c' => 'fatura', 'a' => 'index']);
+    }
+    public function search($parametros){
+        $user = User::find(array('conditions' => array('username LIKE ?', '%'.$parametros['pesquisa'].'%')));
+        
+        $resultado = Fatura::all(array('conditions' => array('cliente_id = ? OR funcionario_id = ? OR id = ?', $user->id, $user->id, $parametros['pesquisa'])));
+       
+        $this->renderView('Faturas', 'index.php', ['faturas' => $resultado, 'pesquisa' => true]);
     }
    
 }

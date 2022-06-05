@@ -5,7 +5,7 @@ class ProdutoController extends MainController
 {
     public function index(){
         $produtos = Produto::all();
-        $this->renderView('Produtos', 'index.php', ['produtos' => $produtos]);
+        $this->renderView('Produtos', 'index.php', ['produtos' => $produtos, 'pesquisa' => false]);
     }
     public function show($referencia){
         $produtos = Produto::find([$referencia]);
@@ -53,5 +53,9 @@ class ProdutoController extends MainController
         $produto = Produto::find([$referencia]);
         $produto->delete();
         $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
+    }
+    public function search($parametros){
+        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ?', '%'.$parametros['pesquisa'].'%', $parametros['pesquisa'])));
+        $this->renderView('Produtos', 'index.php', ['produtos' => $resultado, 'pesquisa' => true]);
     }
 }

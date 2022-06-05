@@ -9,7 +9,7 @@ class ClienteController extends MainController
     }
     public function index(){
         $clientes = User::all(array('conditions' => array('role = ?','cliente')));
-        $this->renderView('Clientes', 'index.php', ['clientes' => $clientes]);
+        $this->renderView('Clientes', 'index.php', ['clientes' => $clientes, 'pesquisa' => false]);
     }
     public function create(){
         // redireciona para vista para criar um novo
@@ -57,5 +57,9 @@ class ClienteController extends MainController
         }
         $cliente->delete();
         $this->redirectToRoute(['c' => 'cliente', 'a' => 'index']);
+    }
+    public function search($parametros){
+        $resultado = User::all(array('conditions' => array('role = ? AND username LIKE ? OR id = ?', 'cliente', '%'.$parametros['pesquisa'].'%', $parametros['pesquisa'])));
+        $this->renderView('Clientes', 'index.php', ['clientes' => $resultado, 'pesquisa' => true]);
     }
 }

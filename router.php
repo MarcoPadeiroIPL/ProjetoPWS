@@ -92,6 +92,9 @@ switch($c){
             case 'delete':
                 $ivaController->delete($id);
                 break;
+            case 'pesquisar':
+                $ivaController->search($_POST);
+                break;
         }
         break;
     case 'cliente':
@@ -118,6 +121,9 @@ switch($c){
             case 'delete':
                 $clienteController->delete($id);
                 break;
+            case 'pesquisar':
+                $clienteController->search($_POST);
+                break;
         }
         break;
     case 'produto':
@@ -143,6 +149,9 @@ switch($c){
                 break;
             case 'delete':
                 $produtoController->delete($id);
+                break;
+            case 'pesquisar':
+                $produtoController->search($_POST);
                 break;
         }
         break;
@@ -180,7 +189,10 @@ switch($c){
                 $loginController->loginFilter(['funcionario', 'admin']);
                 $faturaController->delete($id);
                 break;
-
+            case 'pesquisar':
+                $loginController->loginFilter(['admin', 'cliente']);
+                $faturaController->search($_POST);
+                break;
         }
         break;
     case 'funcionario':
@@ -216,6 +228,10 @@ switch($c){
             case 'delete':
                 $loginController->loginFilter(['admin']);
                 $funcionarioController->delete($id);
+                break;
+            case 'pesquisar':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->search($_POST);
                 break;
         }
         break;

@@ -4,8 +4,15 @@
     <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
         <div class="row" style="margin-top: 5rem;">
             <div class="col-sm-12">
+                <form action="router.php?c=fatura&a=pesquisar" method="POST">
+                    <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar fatura" class="form-control bg-dark text-white">
+                    <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
+                    <?php if($pesquisa == true){ ?>
+                    <a href="router.php?c=fatura&a=index" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
+                    <?php } ?>
+                </form>
                 <a href="router.php?c=fatura&a=escolher"><button type="button" style="float:right; margin-bottom:2vh"class="btn bg-dark text-white">+ Nova Fatura</button></a>
-                <table class="table table-stripped" >
+                <table class="table table-stripped shadow" >
                     <thead class="table-dark">
                         <th style="border-radius: 10px 0 0 0;"><h3>ID</h3></th>
                         <th><h3>Data</h3></th>
