@@ -2,6 +2,7 @@
 $loginModel = new LoginModel();
 $role = $loginModel->findRole();
 $user = $loginModel->findUsername();
+$id = $loginModel->findID();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +66,7 @@ $user = $loginModel->findUsername();
                         <span class="d-none d-sm-inline mx-3"><?=$user?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small" aria-labelledby="dropdownUser1">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><a href="router.php?c=user&a=show&id=<?=$id?>"class="dropdown-item" href="#">Profile</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>

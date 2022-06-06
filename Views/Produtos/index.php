@@ -33,7 +33,7 @@
                             <td><?=$produto->iva->percentagem?>%</td>
                             <td>
                                 <a href="router.php?c=produto&a=show&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
-                                <a href="router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil" title="Editar"></i>
+                                <a href="router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil" title="Editar"></i></a>
                                 <a href="router.php?c=produto&a=delete&id=<?= $produto->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
                             </td>
                         </tr>

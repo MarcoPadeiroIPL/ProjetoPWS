@@ -122,8 +122,11 @@ class FaturaController extends MainController {
     }
     public function search($parametros){
         $user = User::find(array('conditions' => array('username LIKE ?', '%'.$parametros['pesquisa'].'%')));
-        
-        $resultado = Fatura::all(array('conditions' => array('cliente_id = ? OR funcionario_id = ? OR id = ?', $user->id, $user->id, $parametros['pesquisa'])));
+        if(isset($user)){
+            $resultado = Fatura::all(array('conditions' => array('cliente_id = ? OR funcionario_id = ? OR id = ?', $user->id, $user->id, $parametros['pesquisa'])));
+        } else {
+            $resultado = Fatura::all(array('conditions' => array('id = ?', $parametros['pesquisa'])));
+        }
        
         $this->renderView('Faturas', 'index.php', ['faturas' => $resultado, 'pesquisa' => true]);
     }

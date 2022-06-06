@@ -42,10 +42,10 @@
                                 </td>
                             <?php }
                             if($fatura->estado == 'em lancamento' && $role != 'cliente') { ?>
-                                <td>
-                                    <a href="router.php?c=fatura&a=emitir&id=<?= $fatura->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-check-lg" title="Emitir"></i></a>
-                                    <a href="router.php?c=fatura&a=show&id=<?= $fatura->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
-                                    <a href="router.php?c=fatura&a=register&id=<?= $fatura->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i>
+                                <td style="text-align: right; padding-right:2%">
+                                    <a href="router.php?c=fatura&a=emitir&id=<?= $fatura->id ?>" class="text-black" title="Emitir"><i class="fs-4 bi bi-check-lg" title="Emitir"></i></a>
+                                    <i class="fs-4 bi bi-eye text-secondary pl-2" title="Mostrar"></i>
+                                    <a href="router.php?c=fatura&a=register&id=<?= $fatura->id ?>" class="text-black" title="Editar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i></a>
                                     <a href="router.php?c=fatura&a=delete&id=<?= $fatura->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
                                 </td>
                             <?php }

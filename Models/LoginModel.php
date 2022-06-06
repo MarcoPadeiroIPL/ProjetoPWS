@@ -23,6 +23,7 @@ class LoginModel
             if(($user->username == $username) && password_verify($password, $user->password)){
                 $res = true;
                 $role = $user->role;
+                $id = $user->id;
             }
         }
 
@@ -30,6 +31,7 @@ class LoginModel
             // atribuição de valores à sessão atual
             $_SESSION['username'] = $username; // armazena uma string que representa o username
             $_SESSION['role'] = $role; // armazena a role da sessão atual numa string 
+            $_SESSION['id'] = $id; // armazena a role da sessão atual numa string 
             $_SESSION['autenticado'] = (isset($_SESSION['username']) && $username == $_SESSION['username']); // armazena uma boolean
         }
         // devolve uma bool que representa o resultado do login
@@ -56,6 +58,9 @@ class LoginModel
     }
     public function findUsername(){
         return $_SESSION['username'];
+    }
+    public function findID(){
+        return $_SESSION['id'];
     }
 
     

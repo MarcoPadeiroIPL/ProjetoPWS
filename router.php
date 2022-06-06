@@ -28,6 +28,7 @@ require_once 'Controllers/ErrorController.php';
 require_once 'Controllers/ProdutoController.php';
 require_once 'Controllers/FaturaController.php';
 require_once 'Controllers/FuncionarioController.php';
+require_once 'Controllers/UserController.php';
 require_once 'Controllers/EmpresaController.php';
 require_once 'startup/boot.php';
 
@@ -40,6 +41,7 @@ $produtoController = new ProdutoController();
 $faturaController = new FaturaController();
 $funcionarioController = new FuncionarioController();
 $empresaController = new EmpresaController();
+$userController = new UserController();
 $errorController = new ErrorController();
 
 switch($c){
@@ -101,7 +103,7 @@ switch($c){
         $loginController->loginFilter(['funcionario', 'admin']);
         switch($a){
             case 'show':
-                $clienteController->show($id);
+                $userController->show($id);
                 break;
             case 'index':
                 $clienteController->index();
@@ -203,7 +205,7 @@ switch($c){
                 break;
             case 'show':
                 $loginController->loginFilter(['admin']);
-                $funcionarioController->show($id);
+                $userController->show($id);
                 break;
             case 'create':
                 $loginController->loginFilter(['admin']);
@@ -218,7 +220,7 @@ switch($c){
                 $funcionarioController->edit($id);
                 break;
             case 'atualizarPass':
-                $loginController->loginFilter(['funcionario']);
+                $loginController->loginFilter(['funcionario', 'admin']);
                 $funcionarioController->atualizarPass($id);
                 break;
             case 'update':
@@ -247,6 +249,20 @@ switch($c){
             case 'update':
                 $empresaController->update($id);
                 break;
+        }
+        break;
+    case 'user':
+        switch($a){
+            case 'show':
+                $loginController->loginFilter(['admin', 'funcionario', 'cliente']);
+                $loginController->userFilter($id);
+                $userController->show($id);
+                break;
+            case 'edit':
+                $loginController->loginFilter(['admin', 'funcionario']);
+                break;
+            case 'update':
+                $loginController->loginFilter(['admin', 'funcionario']);
         }
         break;
     default: $homeController->Index();

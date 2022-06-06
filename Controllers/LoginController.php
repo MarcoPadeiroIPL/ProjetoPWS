@@ -47,4 +47,20 @@ class LoginController extends MainController{
         }
         $this->redirectToRoute(['c' => 'error', 'a' => 'noAccess']);
     } 
+    public function userFilter($id){
+        if($this->loginModel->findRole() == 'cliente'){
+            // cliente só tem acesso à sua propria informacao
+            if($id != $this->loginModel->findID()){
+                $this->redirectToRoute(['c' => 'error', 'a' => 'noAccess']);
+            }
+        }
+        if($this->loginModel->findRole() == 'funcionario'){
+            // funcionario só tem acesso à informação de todos os clientes e de si mesmo
+            $userToShow = User::find([$id]);
+            if($userToShow->role != 'cliente' && $id != $this->loginModel->findID()){
+                $this->redirectToRoute(['c' => 'error', 'a' => 'noAccess']);
+            }
+
+        }
+    }
 }

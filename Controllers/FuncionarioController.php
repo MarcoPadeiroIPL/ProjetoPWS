@@ -53,8 +53,7 @@ class FuncionarioController extends MainController
         $funcionario->update_attributes($_POST);
         if($funcionario->is_valid()){
             $funcionario->save();
-            if($loginModel->findRole == 'admin'){ $this->redirectToRoute(['c' => 'funcionario', 'a' => 'index']); }
-            else { $this->redirectToRoute(['c' => 'home']); }
+            $this->redirectToRoute(['c' => 'users', 'a' => 'show', 'id' => $loginModel->findID()]);
         } else {
             $this->renderView('Funcionarios', 'edit.php');
         }

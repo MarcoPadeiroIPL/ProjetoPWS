@@ -30,7 +30,7 @@
                             <td style="text-align: center;"><?php if($iva->vigor == 1){ echo 'Sim'; } else { echo 'Não'; }  ?></td>
                             <td style="text-align:right; padding-right:2%">
                                 <a href="router.php?c=iva&a=show&id=<?= $iva->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
-                                <a href="router.php?c=iva&a=edit&id=<?= $iva->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil" title="Editar"></i>
+                                <a href="router.php?c=iva&a=edit&id=<?= $iva->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil" title="Editar"></i></a>
                                 <a href="router.php?c=iva&a=delete&id=<?= $iva->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
                             </td>
                         </tr>
