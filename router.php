@@ -8,15 +8,15 @@ $c = ' ';
 $a = ' ';
 $id = ' ';
 
-if(isset($_GET['c'])){
+if (isset($_GET['c'])) {
     $c = $_GET['c'];
 }
-if(isset($_GET['a'])){
+if (isset($_GET['a'])) {
     $a = $_GET['a'];
 }
 
-if(isset($_GET['id'])){ 
-    $id = $_GET['id']; 
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 }
 
 require_once 'Controllers/LoginController.php';
@@ -44,27 +44,28 @@ $empresaController = new EmpresaController();
 $userController = new UserController();
 $errorController = new ErrorController();
 
-switch($c){
+switch ($c) {
     case 'home':
         $homeController->index();
         break;
     case 'auth':
-        switch($a){
+        switch ($a) {
             case 'login':
                 $loginController->login();
                 break;
             case 'logout':
                 $loginController->logout();
                 break;
-            default: $loginController->login();
-        }  
+            default:
+                $loginController->login();
+        }
         break;
     case 'dashboard':
         $loginController->loginFilter([$a]);
         $dashboardController->loggedInView($a);
         break;
     case 'error':
-        switch($a){
+        switch ($a) {
             case 'noAccess':
                 $errorController->noAccess();
                 break;
@@ -72,7 +73,7 @@ switch($c){
         break;
     case 'iva':
         $loginController->loginFilter(['funcionario', 'admin']);
-        switch($a){
+        switch ($a) {
             case 'index':
                 $ivaController->index();
                 break;
@@ -101,7 +102,7 @@ switch($c){
         break;
     case 'cliente':
         $loginController->loginFilter(['funcionario', 'admin']);
-        switch($a){
+        switch ($a) {
             case 'show':
                 $userController->show($id);
                 break;
@@ -130,7 +131,7 @@ switch($c){
         break;
     case 'produto':
         $loginController->loginFilter(['funcionario', 'admin']);
-        switch($a){
+        switch ($a) {
             case 'index':
                 $produtoController->index();
                 break;
@@ -158,7 +159,7 @@ switch($c){
         }
         break;
     case 'fatura':
-        switch($a){
+        switch ($a) {
             case 'index':
                 $loginController->loginFilter(['cliente', 'funcionario', 'admin']);
                 $faturaController->index();
@@ -169,7 +170,7 @@ switch($c){
                 break;
             case 'create':
                 $loginController->loginFilter(['funcionario', 'admin']);
-                $faturaController->create();
+                $faturaController->create($id);
                 break;
             case 'register':
                 $loginController->loginFilter(['funcionario', 'admin']);
@@ -192,13 +193,17 @@ switch($c){
                 $faturaController->delete($id);
                 break;
             case 'pesquisar':
-                $loginController->loginFilter(['admin', 'cliente']);
+                $loginController->loginFilter(['admin', 'funcionario', 'cliente']);
                 $faturaController->search($_POST);
+                break;
+            case 'pesquisarProduto':
+                $loginController->loginFilter(['admin', 'funcionario']);
+                $faturaController->searchProduto($_POST);
                 break;
         }
         break;
     case 'funcionario':
-        switch($a){
+        switch ($a) {
             case 'index':
                 $loginController->loginFilter(['admin']);
                 $funcionarioController->index();
@@ -239,7 +244,7 @@ switch($c){
         break;
     case 'empresa':
         $loginController->loginFilter(['admin', 'funcionario']);
-        switch($a){
+        switch ($a) {
             case 'show':
                 $empresaController->show($id);
                 break;
@@ -252,7 +257,7 @@ switch($c){
         }
         break;
     case 'user':
-        switch($a){
+        switch ($a) {
             case 'show':
                 $loginController->loginFilter(['admin', 'funcionario', 'cliente']);
                 $loginController->userFilter($id);
@@ -265,5 +270,6 @@ switch($c){
                 $loginController->loginFilter(['admin', 'funcionario']);
         }
         break;
-    default: $homeController->Index();
+    default:
+        $homeController->Index();
 }

@@ -2,26 +2,27 @@
 require_once 'Controllers/MainController.php';
 require_once 'Models/LoginModel.php';
 
-class FaturaController extends MainController {
-    public function index(){
+class FaturaController extends MainController
+{
+    public function index()
+    {
         $loginModel = new LoginModel();
-        if($loginModel->findRole() == 'funcionario' || $loginModel->findRole() == 'admin'){
+        if ($loginModel->findRole() == 'funcionario' || $loginModel->findRole() == 'admin') {
             $faturas = Fatura::all();
-        } else if($loginModel->findRole() == 'cliente'){
-            $cliente = User::find(array('conditions' => array('username = ?', $loginModel->findUsername()))); 
+        } else if ($loginModel->findRole() == 'cliente') {
+            $cliente = User::find(array('conditions' => array('username = ?', $loginModel->findUsername())));
             $faturas = Fatura::all(array('conditions' => array('cliente_id = ?', $cliente->id)));
         }
         $this->renderView('Faturas', 'index.php', ['faturas' => $faturas, 'pesquisa' => false]);
     }
-    public function escolherCliente(){
-        $clientes = User::all(array('conditions' => array('role = ?', 'cliente')));
-        $this->renderView('Faturas', 'escolherCliente.php', ['clientes' => $clientes]);
+    public function escolherCliente()
+    {
+        $clientes = User::all(array('conditions' => array('role = ? AND ativo = ?', 'cliente', true)));
+        $this->renderView('Faturas', 'escolherCliente.php', ['clientes' => $clientes, 'pesquisa' => false]);
     }
-    public function create(){
+    public function create($idCliente)
+    {
         $loginModel = new LoginModel();
-
-        // obtem o cliente escolhido
-        $id = $_POST['clienteID'];
 
         // obtem o funcionario que está atualmente a tratar da fatura
         $funcionario = User::find(array('conditions' => array('username = ?', $loginModel->findUsername())));
@@ -30,37 +31,46 @@ class FaturaController extends MainController {
         $novaFatura = array(
             //'data'=> date('Y-m-d H:i:s'),
             'estado' => 'em lancamento',
-            'cliente_id' => $id,
+            'cliente_id' => $idCliente,
             'funcionario_id' => $funcionario->id
         );
 
         $fatura = new Fatura($novaFatura);
-        if($fatura->is_valid()){
+        if ($fatura->is_valid()) {
             $fatura->save();
             $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $fatura->id]);
         }
     }
-    public function register($fatura_id){
+    public function register($fatura_id)
+    {
         $fatura = Fatura::find([$fatura_id]);
         $produtos = Produto::all();
-        $this->renderView('Faturas', 'registar.php', ['produtos' => $produtos, 'fatura' => $fatura]);
+        $this->renderView('Faturas', 'registar.php', ['produtos' => $produtos, 'fatura' => $fatura, 'pesquisa' => false]);
     }
-    public function adicionarLinha(){
+    public function searchProduto($parametros)
+    {
+        $fatura = Fatura::find([$parametros['fatura_id']]);
+        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ?', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
+        $this->renderView('Faturas', 'registar.php', ['produtos' => $resultado, 'fatura' => $fatura, 'pesquisa' => true]);
+    }
+    public function adicionarLinha()
+    {
         $linha = new LinhaFatura($_POST);
         $fatura = Fatura::find([$linha->fatura_id]);
         $exists = 0;
-        if($linha->is_valid()){
-            if($linha->produto->stock >= $linha->quantidade){
+        if ($linha->is_valid()) {
+
+            if ($linha->produto->stock >= $linha->quantidade) {
                 // verifica se a linha já existe, caso exista guarda o id da linha
-                foreach($fatura->linhas as $linhaTest){
-                    if($linha->produto->referencia == $linhaTest->produto->referencia){
+                foreach ($fatura->linhas as $linhaTest) {
+                    if ($linha->produto->referencia == $linhaTest->produto->referencia) {
                         $exists = $linhaTest->id;
                         break;
                     }
                 }
 
                 // caso exista, atualiza a linha antiga com as novas informações
-                if($exists != 0){
+                if ($exists != 0) {
                     $oldLinha = LinhaFatura::find([$exists]);
                     $oldLinha->quantidade += $linha->quantidade;
                     $oldLinha->produto->stock -= $linha->quantidade;
@@ -74,15 +84,15 @@ class FaturaController extends MainController {
                 }
                 $faturax = Fatura::find([$linha->fatura_id]);
                 $produtos = Produto::all(array('conditions' => array('stock > 0')));
-                $this->renderView('Faturas', 'registar.php', ['produtos'=>$produtos, 'fatura' => $faturax]);
+                $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $linha->fatura_id]);
             } else {
                 echo 'Não há stock';
-            // erro
+                // erro
             }
         }
-
     }
-    public function emitir($faturaID){
+    public function emitir($faturaID)
+    {
         // vai buscar a fatura
         $fatura = Fatura::find([$faturaID]);
 
@@ -91,10 +101,10 @@ class FaturaController extends MainController {
         $valorIVAFatura = 0;
 
         // vai por cada linha
-        foreach($fatura->linhas as $linha){
+        foreach ($fatura->linhas as $linha) {
             // adiciona ao valor total da fatura
             $valorTotalFatura += (float)$linha->valor * (int)$linha->quantidade;
-            $valorIVAFatura += (float)$linha->valor_iva * (int)$linha->quantidade;
+            $valorIVAFatura += (((float)$linha->valor_iva * 0.01) * (float)$linha->valor) * (int)$linha->quantidade;
         }
         // atualização dos atributos que faltavam da fatura
         $novosAtributosFatura = array(
@@ -103,32 +113,37 @@ class FaturaController extends MainController {
             'ivaTotal' => $valorIVAFatura
         );
         $fatura->update_attributes($novosAtributosFatura);
-        if($fatura->is_valid()){
+        if ($fatura->is_valid()) {
             $fatura->save();
             $this->redirectToRoute(['c' => 'fatura', 'a' => 'show', 'id' => $faturaID]);
         }
     }
-    public function show($fatura_id){
+    public function show($fatura_id)
+    {
         $fatura = Fatura::find([$fatura_id]);
         $empresa = Empresa::find([1]);
         // vai buscar as linhas que pertencem a esta fatura
-        
+
         $this->renderView('Faturas', 'show.php', ['fatura' => $fatura, 'empresa' => $empresa]);
     }
-    public function delete($fatura_id){
+    public function delete($fatura_id)
+    {
         $fatura = Fatura::find([$fatura_id]);
+        foreach ($fatura->linhas as $linha) {
+            $linha->delete();
+        }
         $fatura->delete();
         $this->redirectToRoute(['c' => 'fatura', 'a' => 'index']);
     }
-    public function search($parametros){
-        $user = User::find(array('conditions' => array('username LIKE ?', '%'.$parametros['pesquisa'].'%')));
-        if(isset($user)){
+    public function search($parametros)
+    {
+        $user = User::find(array('conditions' => array('username LIKE ?', '%' . $parametros['pesquisa'] . '%')));
+        if (isset($user)) {
             $resultado = Fatura::all(array('conditions' => array('cliente_id = ? OR funcionario_id = ? OR id = ?', $user->id, $user->id, $parametros['pesquisa'])));
         } else {
             $resultado = Fatura::all(array('conditions' => array('id = ?', $parametros['pesquisa'])));
         }
-       
+
         $this->renderView('Faturas', 'index.php', ['faturas' => $resultado, 'pesquisa' => true]);
     }
-   
 }

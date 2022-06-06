@@ -59,6 +59,7 @@
                     </div>
                 </div>
                 <input type="hidden" class="form-control" name="role" value="funcionario">
+                <input type="hidden" class="form-control" name="ativo" value='1'>
                 <button type="submit" class="btn btn-primary">Criar</button>
                 <a href="router.php?c=funcionario&a=index">Voltar atras</a>
             </div>
