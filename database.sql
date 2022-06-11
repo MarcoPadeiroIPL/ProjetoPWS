@@ -1,6 +1,6 @@
 -- @block Criação da base de dados
 DROP DATABASE IF EXISTS ProjetoPWS_A;
-CREATE DATABASE ProjetoPWS_A;
+CREATE DATABASE IF NOT EXISTS ProjetoPWS_A;
 USE ProjetoPWS_A;
 
 -- @block Criação de um utilizador especifico para aceder à base de dados

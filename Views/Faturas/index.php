@@ -1,8 +1,8 @@
     <div class="row min-wh-100 mt-0" style="    background-color:rgba(243,243,244,255);">
-        <span class="fs-3">Faturas</span>
+        <span class="fs-3">Produtos</span>
     </div>
-    <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
-        <div class="row" style="margin-top: 5rem;">
+    <div class="row" style="height:95.3245%; background-color: #e8e8e9;">
+        <div class="row" style="margin-top: 5%;">
             <div class="col-sm-12">
                 <form action="router.php?c=fatura&a=pesquisar" method="POST">
                     <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar fatura" class="form-control bg-dark text-white">
@@ -78,5 +78,6 @@
                     </tbody>
                 </table>
             </div>
+
         </div> <!-- /row -->
     </div> <!-- /row -->

@@ -11,12 +11,17 @@
                     </div>
                     <div class="row h-50" style="display: flex; justify-content: center; align-items: center;">
                         <form action="router.php?c=auth&a=login" method="post">
-                            <div class="mt-5 mb-5" style="display: flex; justify-content: center; align-items: center;">
-                                <input type="text" placeholder="Username" class="form-control" id="inputUsername" name="username" required
-                                style="border-radius:30px; width:70%; height:6vh">
-                            </div>    
-                            <div style="display: flex; justify-content: center; align-items: center;">
-                                <input style="border-radius:30px; width:70%; height:6vh" type="password" placeholder="Password" class="form-control" id="inputPassword" name="password" required>
+                            <div class="row mt-5 mb-5">
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;"><input type="text" value="<?php if ($wrong == 'password') echo $user ?>" placeholder="Username" class="form-control <?php if ($wrong == 'username') echo 'is-invalid'; ?>" id="inputUsername" name="username" required style="border-radius:30px; width:70%; height:6vh"></div>
+                                <?php if ($wrong == 'username') { ?>
+                                    <div class="row text-danger" style="display: flex; justify-content: center; align-items: center;">Username não existe</div>
+                                <?php } ?>
+                            </div>
+                            <div class="row">
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;"><input style="border-radius:30px; width:70%; height:6vh" type="password" placeholder="Password" class="form-control <?php if ($wrong == 'password') echo 'is-invalid'; ?>" id="inputPassword" name="password" required></div>
+                                <?php if ($wrong == 'password') { ?>
+                                    <div class="row text-danger" style="display: flex; justify-content: center; align-items: center;">Password incorreta</div>
+                                <?php } ?>
                             </div>
                             <div class="mt-5 fs-4" style="display: flex; justify-content: center; align-items: center;">
                                 <button style="width:25%; border-radius:30px; height:6vh" type="submit" class="btn btn-dark">Login</button>
@@ -28,23 +33,3 @@
         </div>
     </div>
 </div>
-<!--<div class="main-container d-flex justify-content-center" style="margin-top: 13%;width:100%; border:1px solid red">
-        <form action="router.php?c=auth&a=login" method="post">
-            <div class="mb-3">
-                <label for="inputUsername" class="form-label">Username:</label>
-                <input type="text" class="form-control" id="inputUsername" name="username" required><br>
-                <div class="invalid-feedback">
-                        Campo obrigatório!
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="inputPassword" class="form-label">Password:</label>
-                <input type="password" class="form-control" id="inputPassword" name="password" required><br>
-                <div class="invalid-feedback">
-                    Campo obrigatório!
-                </div>
-            </div>
-
-        </form> 
-</div>-->
-    

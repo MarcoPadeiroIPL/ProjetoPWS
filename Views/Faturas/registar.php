@@ -5,7 +5,7 @@
     <div class="row" style="margin-top: 5%;">
         <div class="col-sm-12">
             <div class="row">
-                <div class="col-6">
+                <div class="col-5">
                     <form action="router.php?c=fatura&a=pesquisarProduto" method="POST">
                         <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar produto" class="form-control bg-dark text-white">
                         <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
@@ -39,10 +39,10 @@
                                     <tr>
                                         <td><?= $produto->referencia ?></td>
                                         <td class="w-25"><?= $produto->descricao ?></td>
-                                        <td class="text-center"><input class="form-control bg-dark text-white text-center" style="width:30%;" name="quantidade" type="text" value=1 required></td>
+                                        <td class="text-center"><input class="form-control bg-dark text-white text-center" style="width:3vw;" name="quantidade" type="text" value=1 required></td>
                                         <td style="padding-left:2rem;" class="text-end"><?= $produto->preco ?>€</td>
                                         <td style="padding-left:2rem;" class="text-end"><?= $produto->stock ?></td>
-                                        <td style="padding-left:5rem;"><button type="submit" class="btn btn-dark">Adicionar</button></td>
+                                        <td style="padding-left:2rem;"><button type="submit" class="btn btn-dark">Adicionar</button></td>
                                     </tr>
                                     <input type="hidden" name="valor" value="<?= $produto->preco ?>">
                                     <input type="hidden" name="valor_iva" value="<?= $produto->iva->percentagem ?>">

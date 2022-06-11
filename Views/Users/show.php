@@ -3,10 +3,10 @@
     </div>
     <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
         <div class="row" style="margin-top: 5rem;">
-            <?php if($id != $utilizador->id){ ?>
-            <div class="col"><a href="router.php?c=<?= $utilizador->role ?>&a=index"><i class="display-4 bi bi-arrow-left-circle"></i></a></div>
+            <?php if ($id != $utilizador->id) { ?>
+                <div class="col"><a href="router.php?c=<?= $utilizador->role ?>&a=index"><i class="display-4 bi bi-arrow-left-circle"></i></a></div>
             <?php } else { ?>
-            <div class="col"></div>
+                <div class="col"></div>
             <?php } ?>
             <div class="col-6 shadow-lg" style="height:55vh;">
                 <div class="row">

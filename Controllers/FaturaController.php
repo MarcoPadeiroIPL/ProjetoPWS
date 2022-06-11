@@ -29,7 +29,7 @@ class FaturaController extends MainController
 
         // cria uma nova fatura
         $novaFatura = array(
-            //'data'=> date('Y-m-d H:i:s'),
+            //'data' => date("Y", strtotime(date())),
             'estado' => 'em lancamento',
             'cliente_id' => $idCliente,
             'funcionario_id' => $funcionario->id
@@ -60,7 +60,7 @@ class FaturaController extends MainController
         $exists = 0;
         if ($linha->is_valid()) {
 
-            if ($linha->produto->stock >= $linha->quantidade) {
+            if ($linha->produto->stock >= $linha->quantidade && $linha->quantidade > 0) {
                 // verifica se a linha já existe, caso exista guarda o id da linha
                 foreach ($fatura->linhas as $linhaTest) {
                     if ($linha->produto->referencia == $linhaTest->produto->referencia) {
@@ -86,8 +86,7 @@ class FaturaController extends MainController
                 $produtos = Produto::all(array('conditions' => array('stock > 0')));
                 $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $linha->fatura_id]);
             } else {
-                echo 'Não há stock';
-                // erro
+                $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $linha->fatura_id]);
             }
         }
     }

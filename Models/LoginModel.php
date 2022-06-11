@@ -16,13 +16,28 @@ class LoginModel
     // Validação de credenciais
     public function checkLogin($username, $password)
     {
-        // Vai buscar todos os utilizadores ativos
-        $users = User::all(array('conditions' => array('ativo = ?', true)));
+        // Vai ver na base de dados se o username existe
+        $user = User::find(array('conditions' => array('ativo = ? AND username = ?', true, $_POST['username'])));
 
-        // faz a verificação das credenciais
-        $res = false;
-        foreach ($users as $user) {
-            if (($user->username == $username) && password_verify($password, $user->password)) {
+
+        if (!is_null($user)) { // achou um utilizador na base de dados com o username
+            if (password_verify($password, $user->password)) {
+                $_SESSION['username'] = $user->username;
+                $_SESSION['id'] = $user->id;
+                $_SESSION['role'] = $user->role;
+                $_SESSION['autenticado'] = true;
+                return 'valid';
+            } else {
+                return 'password'; // devolve que o problema estava na password
+            }
+        } else {
+            return 'username'; // devolve que o problema estava no username
+        }
+
+        /*foreach ($users as $user) {
+            if ($user->username == $username) {
+                if (password_verify($password, $user->password)) {
+                }
                 $res = true;
                 $role = $user->role;
                 $id = $user->id;
@@ -37,7 +52,7 @@ class LoginModel
             $_SESSION['autenticado'] = (isset($_SESSION['username']) && $username == $_SESSION['username']); // armazena uma boolean
         }
         // devolve uma bool que representa o resultado do login
-        return $res;
+        return $res;*/
     }
 
     public function isLoggedin()

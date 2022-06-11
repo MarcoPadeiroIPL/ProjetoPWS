@@ -2,9 +2,9 @@
 // boot.php é responsavel por todas as constantes e tarefas que devem ser executadas no inicio do programa
 require_once 'vendor/autoload.php';
 
+
 // Criação de ligação à base de dados
-ActiveRecord\Config::initialize(function($cfg)
-{
+ActiveRecord\Config::initialize(function ($cfg) {
     $USER = 'grupo_a';
     $PASS = 'grupo_a_123';
     $SERVER = 'localhost';
@@ -13,8 +13,8 @@ ActiveRecord\Config::initialize(function($cfg)
 
     $cfg->set_model_directory('./Models');
     $cfg->set_connections(
-    array(
-        'development' => 'mysql://' . $USER . ':' . $PASS . '@' . $SERVER . '/' . $DATABASE,
-    )
+        array(
+            'development' => 'mysql://' . $USER . ':' . $PASS . '@' . $SERVER . '/' . $DATABASE,
+        )
     );
 });
