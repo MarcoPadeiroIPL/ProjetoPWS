@@ -57,7 +57,14 @@ class ClienteController extends MainController
             $cliente->save();
             $this->redirectToRoute(['c' => 'cliente', 'a' => 'index']);
         } else {
-            $this->redirectToRoute(['c' => 'cliente', 'a' => 'index', 'id' => $id]);
+            $error = array(
+                'username' => $cliente->errors->on('username'),
+                'email' => $cliente->errors->on('email'),
+                'nif' => $cliente->errors->on('nif'),
+                'telefone' => $cliente->errors->on('telefone'),
+                'codpostal' => $cliente->errors->on('codpostal')
+            );
+            $this->renderView('Clientes', 'edit.php', ['error' => $error, 'cliente' => $cliente]);
         }
     }
     public function delete($id)

@@ -12,7 +12,7 @@ class Produto extends ActiveRecord\Model
         array('descricao'),
         array('preco'),
         array('stock'),
-        array('iva_id'),
+        array('iva_id')
     );
     static $belongs_to = array(
         array('iva', 'foreign_key' => 'iva_id')

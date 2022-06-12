@@ -12,12 +12,11 @@ class Empresa extends ActiveRecord\Model
         array('nif'),
         array('morada'),
         array('codpostal'),
-        array('localidade'),
-        array('capitalsocial')
+        array('localidade')
     );
 
     static $validates_uniqueness_of = array(
-        array('designSocial', 'message' => 'Designação social já existe'),
+        array('designsocial', 'message' => 'Designação social já existe'),
         array('email', 'message' => 'Email já existe'),
         array('telefone', 'message' => 'Telefone já existe'),
         array('nif', 'message' => 'NIF já existe')
@@ -33,13 +32,21 @@ class Empresa extends ActiveRecord\Model
         array('nif', 'only_integer' => true, 'message' => 'Tem que ser numerico!')
     );
 
-    static $validates_inclusion_of = array(
-        array('codpostal', 'in' => '-')
-    );
 
     // relações com outras tabelas
     static $has_many = array(
         array('faturas'),
         array('users')
     );
+
+    public function updateCapitalSocial($id)
+    {
+        $empresa = Empresa::find([$id]);
+        $empresa->capitalsocial = 0;
+        foreach ((Fatura::all()) as $fatura) {
+
+            $empresa->capitalsocial += $fatura->valortotal;
+            $empresa->save();
+        }
+    }
 }

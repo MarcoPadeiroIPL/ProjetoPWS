@@ -27,11 +27,15 @@ class IvaController extends MainController
     public function store()
     {
         $iva = new Iva($_POST);
+        // encriptar a password
         if ($iva->is_valid()) {
             $iva->save();
             $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {
-            $this->redirectToRoute(['c' => 'iva', 'a' => 'create']);
+            $error = array(
+                'percentagem' => $iva->errors->on('percentagem')
+            );
+            $this->renderView('IVA', 'create.php', ['error' => $error, 'iva' => $iva]);
         }
     }
     public function edit($id)

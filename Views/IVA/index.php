@@ -21,7 +21,7 @@
                             <h3>Descrição</h3>
                         </th>
                         <th style="text-align: right">
-                            <h3>%</h3>
+                            <h3>Percentagem</h3>
                         </th>
                         <th style="text-align: center;">
                             <h3>Vigor</h3>

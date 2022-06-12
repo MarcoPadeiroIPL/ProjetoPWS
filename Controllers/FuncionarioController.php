@@ -11,8 +11,8 @@ class FuncionarioController extends MainController
     }
     public function index()
     {
-        $funcionarios = User::all(array('conditions' => array('role = ? AND ativo = ?', 'funcionario', true)));
-        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $funcionarios, 'pesquisa' => false]);
+        $Funcionarios = User::all(array('conditions' => array('role = ? AND ativo = ?', 'funcionario', true)));
+        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $Funcionarios, 'pesquisa' => false]);
     }
     public function create()
     {
@@ -69,7 +69,32 @@ class FuncionarioController extends MainController
             $funcionario->save();
             $this->redirectToRoute(['c' => 'users', 'a' => 'show', 'id' => $loginModel->findID()]);
         } else {
-            $this->redirectToRoute(['c' => 'funcionario', 'a' => 'edit', 'id' => $id]);
+            $error = array(
+                'username' => $funcionario->errors->on('username'),
+                'email' => $funcionario->errors->on('email'),
+                'nif' => $funcionario->errors->on('nif'),
+                'telefone' => $funcionario->errors->on('telefone'),
+                'codpostal' => $funcionario->errors->on('codpostal')
+            );
+            $this->renderView('Funcionarios', 'edit.php', ['error' => $error, 'funcionario' => $funcionario]);
+        }
+    }
+    public function updatePass($id)
+    {
+        $funcionario = User::find([$id]);
+        $_POST['password'] = empty($_POST['password']) ? $funcionario->password : password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $funcionario->update_attributes(array(
+            'password' => $_POST['password'],
+            'email' => $_POST['email']
+        ));
+        if ($funcionario->is_valid()) {
+            $funcionario->save();
+            $this->redirectToRoute(['c' => 'users', 'a' => 'show', 'id' => $id]);
+        } else {
+            $error = array(
+                'email' => $funcionario->errors->on('email')
+            );
+            $this->renderView('Funcionarios', 'updateEmail.php', ['error' => $error, 'funcionario' => $funcionario]);
         }
     }
     public function delete($id)

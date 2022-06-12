@@ -44,76 +44,39 @@ class FaturaController extends MainController
     public function register($fatura_id)
     {
         $fatura = Fatura::find([$fatura_id]);
-        $produtos = Produto::all();
+        $produtos = Produto::all(array('conditions' => array('stock > 0')));
         $this->renderView('Faturas', 'registar.php', ['produtos' => $produtos, 'fatura' => $fatura, 'pesquisa' => false]);
     }
     public function searchProduto($parametros)
     {
         $fatura = Fatura::find([$parametros['fatura_id']]);
-        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ?', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
+        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ? AND stock > 0', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
         $this->renderView('Faturas', 'registar.php', ['produtos' => $resultado, 'fatura' => $fatura, 'pesquisa' => true]);
     }
     public function adicionarLinha()
     {
         $linha = new LinhaFatura($_POST);
         $fatura = Fatura::find([$linha->fatura_id]);
-        $exists = 0;
+
         if ($linha->is_valid()) {
-
-            if ($linha->produto->stock >= $linha->quantidade && $linha->quantidade > 0) {
-                // verifica se a linha já existe, caso exista guarda o id da linha
-                foreach ($fatura->linhas as $linhaTest) {
-                    if ($linha->produto->referencia == $linhaTest->produto->referencia) {
-                        $exists = $linhaTest->id;
-                        break;
-                    }
-                }
-
-                // caso exista, atualiza a linha antiga com as novas informações
-                if ($exists != 0) {
-                    $oldLinha = LinhaFatura::find([$exists]);
-                    $oldLinha->quantidade += $linha->quantidade;
-                    $oldLinha->produto->stock -= $linha->quantidade;
-                    $oldLinha->save();
-                    $oldLinha->produto->save();
-                } else { // senão cria uma nova linha
-                    $linha->produto->stock -= $linha->quantidade;
-                    $linha->save();
-                    $linha->produto->save();
-                    $fatura->save();
-                }
-                $faturax = Fatura::find([$linha->fatura_id]);
-                $produtos = Produto::all(array('conditions' => array('stock > 0')));
-                $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $linha->fatura_id]);
-            } else {
-                $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $linha->fatura_id]);
+            if ($fatura->adicionarLinha($linha, $fatura)) {
+                $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $fatura->id]);
             }
         }
+        $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $fatura->id]);
     }
     public function emitir($faturaID)
     {
-        // vai buscar a fatura
-        $fatura = Fatura::find([$faturaID]);
+        $fatura = new Fatura();
+        $fatura = $fatura->emitirFatura($faturaID);
 
-        // valores para mais tarde alterar os atributos da fatura
-        $valorTotalFatura = 0;
-        $valorIVAFatura = 0;
-
-        // vai por cada linha
-        foreach ($fatura->linhas as $linha) {
-            // adiciona ao valor total da fatura
-            $valorTotalFatura += (float)$linha->valor * (int)$linha->quantidade;
-            $valorIVAFatura += (((float)$linha->valor_iva * 0.01) * (float)$linha->valor) * (int)$linha->quantidade;
-        }
-        // atualização dos atributos que faltavam da fatura
-        $novosAtributosFatura = array(
-            'estado' => 'emitida',
-            'valorTotal' => $valorTotalFatura,
-            'ivaTotal' => $valorIVAFatura
-        );
-        $fatura->update_attributes($novosAtributosFatura);
         if ($fatura->is_valid()) {
             $fatura->save();
+
+            // Update na capital social
+            $empresa = new Empresa();
+            $empresa->updateCapitalSocial(1);
+
             $this->redirectToRoute(['c' => 'fatura', 'a' => 'show', 'id' => $faturaID]);
         }
     }

@@ -19,7 +19,7 @@ class ProdutoController extends MainController
     }
     public function create()
     {
-        $ivas = Iva::all();
+        $ivas = Iva::all(array('conditions' => array('vigor = ?', 1)));
         // redireciona para vista para criar um novo
         $this->renderView('Produtos', 'create.php', ['ivas' => $ivas]);
     }
@@ -30,7 +30,8 @@ class ProdutoController extends MainController
             $produto->save();
             $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
-            $this->renderView('Produtos', 'create.php');
+            $ivas = Iva::all(array('conditions' => array('vigor = ?', 1)));
+            $this->renderView('Produtos', 'create.php', ['produto' => $produto, 'ivas' => $ivas]);
         }
     }
     public function edit($referencia)
@@ -38,7 +39,8 @@ class ProdutoController extends MainController
         $produto = Produto::find([$referencia]);
 
         if ($produto->is_valid()) {
-            $this->renderView('Produtos', 'edit.php', ['produto' => $produto]);
+            $ivas = Iva::all(array('conditions' => array('vigor = ?', 1)));
+            $this->renderView('Produtos', 'edit.php', ['produto' => $produto, 'ivas' => $ivas]);
         } else {
             $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         }

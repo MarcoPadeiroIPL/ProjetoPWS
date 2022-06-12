@@ -39,7 +39,7 @@
                                     <tr>
                                         <td><?= $produto->referencia ?></td>
                                         <td class="w-25"><?= $produto->descricao ?></td>
-                                        <td class="text-center"><input class="form-control bg-dark text-white text-center" style="width:3vw;" name="quantidade" type="text" value=1 required></td>
+                                        <td class="text-center"><input class="form-control bg-dark text-white text-center <?php if (isset($stockInsuficiente) && $produto->referencia == $stockInsuficiente) echo 'is-invalid'; ?>" style="width:3vw;" name="quantidade" type="text" value=1 required></td>
                                         <td style="padding-left:2rem;" class="text-end"><?= $produto->preco ?>€</td>
                                         <td style="padding-left:2rem;" class="text-end"><?= $produto->stock ?></td>
                                         <td style="padding-left:2rem;"><button type="submit" class="btn btn-dark">Adicionar</button></td>
@@ -84,7 +84,7 @@
                                             <td><?= $linha->produto->descricao ?></td>
                                             <td class="text-center"><?= $linha->quantidade ?></td>
                                             <td class="text-center"><?= $linha->valor ?>€</td>
-                                            <td class="text-center"><?= $linha->valor_iva ?>€</td>
+                                            <td class="text-center"><?= $linha->valor_iva ?>%</td>
                                         </tr>
                                     <?php } ?>
                                 </form>

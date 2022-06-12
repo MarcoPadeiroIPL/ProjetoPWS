@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS empresas(
     morada          VARCHAR(50)     NOT NULL,
     codPostal       VARCHAR(8)      NOT NULL,
     localidade      VARCHAR(30)     NOT NULL,
-    capitalSocial   DECIMAL(8,2),
+    capitalSocial   DECIMAL(8,2)    NOT NULL DEFAULT 0.00,
     CONSTRAINT pk_empresas_id PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS users(
     email           VARCHAR(255)    NOT NULL        UNIQUE,
     telefone        VARCHAR(9)      NOT NULL        UNIQUE,
     NIF             VARCHAR(9)      NOT NULL        UNIQUE,
-    morada          VARCHAR(50)     NOT NULL,  
+    morada          VARCHAR(255)     NOT NULL,  
     codPostal       VARCHAR(8)      NOT NULL,  
     localidade      VARCHAR(30)     NOT NULL,  
     role            enum('admin', 'funcionario', 'cliente')      NOT NULL,  
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS ivas(
     id              INT             NOT NULL        AUTO_INCREMENT,
     percentagem     INT             NOT NULL,
-    descricao       TEXT            NOT NULL,
+    descricao       VARCHAR(255)    NOT NULL,
     vigor           BOOLEAN         NOT NULL,
     CONSTRAINT pk_ivas_id PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -49,8 +49,8 @@ CREATE TABLE IF NOT EXISTS ivas(
 -- @block Criação da tabela 'produtos'
 CREATE TABLE IF NOT EXISTS produtos(
     referencia      INT             NOT NULL        AUTO_INCREMENT,
-    descricao       TEXT            NOT NULL,
-    preco           DECIMAL(8,2)     NOT NULL,
+    descricao       VARCHAR(255)    NOT NULL,
+    preco           DECIMAL(8,2)    NOT NULL,
     stock           INT             NOT NULL,
     iva_id          INT             NOT NULL,
     CONSTRAINT pk_produtos_id PRIMARY KEY(referencia),
@@ -177,3 +177,7 @@ SET valorTotal = (SELECT SUM(linhas_faturas.valor * linhas_faturas.quantidade) F
 
 UPDATE faturas 
 SET ivaTotal = (SELECT SUM(linhas_faturas.valor * linhas_faturas.valor_iva * 0.01 * linhas_faturas.quantidade) FROM linhas_faturas WHERE linhas_faturas.fatura_id=faturas.id);
+
+UPDATE empresas
+SET capitalSocial = (SELECT SUM(valorTotal) FROM faturas)
+WHERE id=1;

@@ -228,6 +228,10 @@ switch ($c) {
                 $loginController->loginFilter(['funcionario', 'admin']);
                 $funcionarioController->atualizarPass($id);
                 break;
+            case 'updatePass':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $funcionarioController->updatePass($id);
+                break;
             case 'update':
                 $loginController->loginFilter(['funcionario', 'admin']);
                 $funcionarioController->update($id);
