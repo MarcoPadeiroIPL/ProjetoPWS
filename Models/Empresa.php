@@ -1,10 +1,11 @@
 <?php
-class Empresa extends ActiveRecord\Model{
+class Empresa extends ActiveRecord\Model
+{
     // para ter 100% certeze que vai buscar a tabela correta
     static $table_name = 'empresas';
 
     // especificar os campos obrigatorios para a validação de uma nova linha de fatura
-    static $validates_presence_of = array (
+    static $validates_presence_of = array(
         array('designsocial'),
         array('email'),
         array('telefone'),
@@ -13,6 +14,27 @@ class Empresa extends ActiveRecord\Model{
         array('codpostal'),
         array('localidade'),
         array('capitalsocial')
+    );
+
+    static $validates_uniqueness_of = array(
+        array('designSocial', 'message' => 'Designação social já existe'),
+        array('email', 'message' => 'Email já existe'),
+        array('telefone', 'message' => 'Telefone já existe'),
+        array('nif', 'message' => 'NIF já existe')
+    );
+    static $validates_size_of = array(
+        array('telefone', 'is' => 9, 'message' => 'Precisa de ter 9 digitos!'),
+        array('nif', 'is' => 9, 'message' => 'Precisa de ter 9 digitos!'),
+        array('codpostal', 'is' => 8, 'message' => 'Precisa de ter 8 digitos!')
+    );
+
+    static $validates_numericality_of = array(
+        array('telefone', 'only_integer' => true, 'message' => 'Tem que ser numerico!'),
+        array('nif', 'only_integer' => true, 'message' => 'Tem que ser numerico!')
+    );
+
+    static $validates_inclusion_of = array(
+        array('codpostal', 'in' => '-')
     );
 
     // relações com outras tabelas

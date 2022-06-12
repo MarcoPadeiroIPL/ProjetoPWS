@@ -11,7 +11,7 @@ class FuncionarioController extends MainController
     }
     public function index()
     {
-        $funcionarios = User::all(array('conditions' => array('role = ?', 'funcionario')));
+        $funcionarios = User::all(array('conditions' => array('role = ? AND ativo = ?', 'funcionario', true)));
         $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $funcionarios, 'pesquisa' => false]);
     }
     public function create()
@@ -28,7 +28,14 @@ class FuncionarioController extends MainController
             $funcionario->save();
             $this->redirectToRoute(['c' => 'funcionario', 'a' => 'index']);
         } else {
-            $this->redirectToRoute(['c' => 'funcionario', 'a' => 'create']);
+            $error = array(
+                'username' => $funcionario->errors->on('username'),
+                'email' => $funcionario->errors->on('email'),
+                'nif' => $funcionario->errors->on('nif'),
+                'telefone' => $funcionario->errors->on('telefone'),
+                'codpostal' => $funcionario->errors->on('codpostal')
+            );
+            $this->renderView('Funcionarios', 'create.php', ['error' => $error, 'funcionario' => $funcionario]);
         }
     }
     public function edit($id)
@@ -69,6 +76,7 @@ class FuncionarioController extends MainController
     {
         $funcionario = User::find([$id]);
         $funcionario->ativo = false;
+        $funcionario->save();
         $this->redirectToRoute(['c' => 'funcionario', 'a' => 'index']);
     }
     public function search($parametros)

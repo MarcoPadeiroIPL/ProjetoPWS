@@ -12,7 +12,7 @@
                         <a href="router.php?c=produto&a=index" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
                     <?php } ?>
                 </form>
-                <a href="router.php?c=produto&a=create"><button type="button" style="float:right; margin-bottom:2vh" class="btn bg-dark text-white">+ Nova Produto</button></a>
+                <a href="router.php?c=produto&a=create"><button type="button" style="float:right; margin-bottom:2vh" class="btn bg-dark text-white">+ Novo Produto</button></a>
                 <table class="table table-stripped shadow">
                     <thead class="table-dark" style="position: sticky; top:0">
                         <th style="border-radius: 10px 0 0 0;">

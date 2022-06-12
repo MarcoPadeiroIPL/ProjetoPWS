@@ -19,8 +19,9 @@ class ProdutoController extends MainController
     }
     public function create()
     {
+        $ivas = Iva::all();
         // redireciona para vista para criar um novo
-        $this->renderView('Produtos', 'create.php');
+        $this->renderView('Produtos', 'create.php', ['ivas' => $ivas]);
     }
     public function store()
     {
