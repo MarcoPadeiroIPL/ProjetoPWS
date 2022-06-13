@@ -129,10 +129,10 @@ INSERT INTO empresas(designSocial, email, telefone, NIF, morada, codPostal, loca
 
 -- @block
 INSERT INTO faturas(data, estado, cliente_id, funcionario_id) VALUES
-    ('2022-05-27 15:56:07', 'emitida', 4, 1),
-    ('2022-03-07 21:16:23', 'emitida', 5, 2),
-    ('2022-04-12 09:12:47', 'emitida', 6, 3),
-    ('2022-05-30 10:11:35', 'emitida', 5, 1);
+    ('2022-05-27', 'emitida', 4, 1),
+    ('2022-03-07', 'emitida', 5, 2),
+    ('2022-04-12', 'emitida', 6, 3),
+    ('2022-05-30', 'emitida', 5, 1);
 
 -- @block
 INSERT INTO linhas_faturas(quantidade, fatura_id, produto_id) VALUES
