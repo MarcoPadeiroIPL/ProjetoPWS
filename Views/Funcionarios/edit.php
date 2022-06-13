@@ -83,7 +83,38 @@
                                     <div class="row"><span class="fs-5"><input type="text" value="<?= $funcionario->localidade ?>" class="form-control" id="inputLocalidade" name="localidade" required></span></div>
                                 </div>
                             </div>
-                            <input type="hidden" name="role" value="funcionario">
+                            <div class="row">
+                                <div class="col-4 mb-3 text-start"><span class="fs-5">Role:</span></div>
+                                <div class="col mb-2">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="cliente" name="role" id="radioRole" checked>
+                                                <label class="form-check-label" for="vigor">
+                                                    Cliente
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="funcionario" name="role" id="radioRole" checked>
+                                                <label class="form-check-label" for="vigor">
+                                                    Funcionario
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="admin" name="role" id="radioRole">
+                                                <label class="form-check-label" for="vigor">
+                                                    Admin
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <input type="hidden" name="ativo" value=1>
                             <button type="submit" class="w-50 btn btn-dark mt-2">Editar</button>
                         </form>

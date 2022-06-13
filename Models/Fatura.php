@@ -37,6 +37,7 @@ class Fatura extends ActiveRecord\Model
         }
         // atualização dos atributos que faltavam da fatura
         $novosAtributosFatura = array(
+            'data' => date("Y-m-d"),
             'estado' => 'emitida',
             'valorTotal' => $valorTotalFatura,
             'ivaTotal' => $valorIVAFatura

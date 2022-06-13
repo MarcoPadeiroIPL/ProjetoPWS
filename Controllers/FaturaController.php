@@ -29,7 +29,6 @@ class FaturaController extends MainController
 
         // cria uma nova fatura
         $novaFatura = array(
-            //'data' => date("Y", strtotime(date())),
             'estado' => 'em lancamento',
             'cliente_id' => $idCliente,
             'funcionario_id' => $funcionario->id

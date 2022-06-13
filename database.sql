@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS produtos(
 -- @block Criação da tabela 'faturas'
 CREATE TABLE IF NOT EXISTS faturas(
     id              INT             AUTO_INCREMENT,
-    data            DATETIME        ,
+    data            DATE        ,
     valorTotal      DECIMAL(8,2),
     ivaTotal        DECIMAL(8,2),
     estado          enum('em lancamento', 'emitida') NOT NULL ,
