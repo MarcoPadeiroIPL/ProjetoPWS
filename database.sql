@@ -1,10 +1,10 @@
 -- @block Criação da base de dados
 DROP DATABASE IF EXISTS ProjetoPWS_A;
-CREATE DATABASE IF NOT EXISTS ProjetoPWS_A;
+CREATE DATABASE ProjetoPWS_A;
 USE ProjetoPWS_A;
 
 -- @block Criação de um utilizador especifico para aceder à base de dados
-CREATE USER 'grupo_a'@'localhost' IDENTIFIED BY 'grupo_a_123';
+CREATE USER IF NOT EXISTS 'grupo_a'@'localhost' IDENTIFIED BY 'grupo_a_123';
 GRANT ALL PRIVILEGES ON ProjetoPWS_A.* TO 'grupo_a'@'localhost';
 
 -- @block Criação da tabela 'empresas'
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS produtos(
     preco           DECIMAL(8,2)    NOT NULL,
     stock           INT             NOT NULL,
     iva_id          INT             NOT NULL,
+    ativo           BOOLEAN        DEFAULT true,
     CONSTRAINT pk_produtos_id PRIMARY KEY(referencia),
     CONSTRAINT pk_produtos_iva_id FOREIGN KEY(iva_id) REFERENCES ivas(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

@@ -7,10 +7,10 @@
             <div class="row">
                 <div class="col-5">
                     <form action="router.php?c=fatura&a=pesquisarProduto" method="POST">
-                        <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar produto" class="form-control bg-dark text-white">
+                        <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" value="<?php if (isset($pesquisa)) echo $pesquisa ?>" placeholder="Pesquisar produto" class="form-control bg-dark text-white">
                         <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
                         <input type="hidden" name="fatura_id" value="<?= $fatura->id ?>">
-                        <?php if ($pesquisa == true) { ?>
+                        <?php if (isset($pesquisa)) { ?>
                             <a href="router.php?c=fatura&a=register&id=<?= $fatura->id ?>" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
                         <?php } ?>
                     </form>
@@ -74,20 +74,21 @@
                                 <th class="text-end">
                                     <h3>IVA(%)</h3>
                                 </th>
+                                <th class="text-end">
+                                </th>
                                 <th style="border-radius: 0 10px 0 0;"></th>
                             </thead>
                             <tbody>
-                                <form action="router.php?c=fatura&a=adicionarLinha" method="POST">
-                                    <?php foreach ($fatura->linhas as $linha) { ?>
-                                        <tr>
-                                            <td><?= $linha->produto->referencia ?></td>
-                                            <td><?= $linha->produto->descricao ?></td>
-                                            <td class="text-center"><?= $linha->quantidade ?></td>
-                                            <td class="text-center"><?= $linha->valor ?>€</td>
-                                            <td class="text-center"><?= $linha->valor_iva ?>%</td>
-                                        </tr>
-                                    <?php } ?>
-                                </form>
+                                <?php foreach ($fatura->linhas as $linha) { ?>
+                                    <tr>
+                                        <td><?= $linha->produto->referencia ?></td>
+                                        <td><?= $linha->produto->descricao ?></td>
+                                        <td class="text-center"><?= $linha->quantidade ?></td>
+                                        <td class="text-center"><?= $linha->valor ?>€</td>
+                                        <td class="text-center"><?= $linha->valor_iva ?>%</td>
+                                        <td class="text-center"><a href="router.php?c=fatura&a=removerLinha&id=<?= $linha->id ?>"><i class="bi bi-trash fs-5"></i></a></td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                         </table>
                         <button type="submit" class="w-100 btn bg-dark text-white">Emitir</button></a>

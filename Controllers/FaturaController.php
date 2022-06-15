@@ -13,12 +13,12 @@ class FaturaController extends MainController
             $cliente = User::find(array('conditions' => array('username = ?', $loginModel->findUsername())));
             $faturas = Fatura::all(array('conditions' => array('cliente_id = ?', $cliente->id)));
         }
-        $this->renderView('Faturas', 'index.php', ['faturas' => $faturas, 'pesquisa' => false]);
+        $this->renderView('Faturas', 'index.php', ['faturas' => $faturas]);
     }
     public function escolherCliente()
     {
         $clientes = User::all(array('conditions' => array('role = ? AND ativo = ?', 'cliente', true)));
-        $this->renderView('Faturas', 'escolherCliente.php', ['clientes' => $clientes, 'pesquisa' => false]);
+        $this->renderView('Faturas', 'escolherCliente.php', ['clientes' => $clientes]);
     }
     public function create($idCliente)
     {
@@ -44,13 +44,13 @@ class FaturaController extends MainController
     {
         $fatura = Fatura::find([$fatura_id]);
         $produtos = Produto::all(array('conditions' => array('stock > 0')));
-        $this->renderView('Faturas', 'registar.php', ['produtos' => $produtos, 'fatura' => $fatura, 'pesquisa' => false]);
+        $this->renderView('Faturas', 'registar.php', ['produtos' => $produtos, 'fatura' => $fatura]);
     }
     public function searchProduto($parametros)
     {
         $fatura = Fatura::find([$parametros['fatura_id']]);
         $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ? AND stock > 0', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
-        $this->renderView('Faturas', 'registar.php', ['produtos' => $resultado, 'fatura' => $fatura, 'pesquisa' => true]);
+        $this->renderView('Faturas', 'registar.php', ['produtos' => $resultado, 'fatura' => $fatura, 'pesquisa' => $parametros['pesquisa']]);
     }
     public function adicionarLinha()
     {
@@ -63,6 +63,44 @@ class FaturaController extends MainController
             }
         }
         $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $fatura->id]);
+    }
+    public function removerLinha($id)
+    {
+        $linha = LinhaFatura::find([$id]);
+        $fatura_id = $linha->fatura_id;
+        $linha->delete();
+        $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $fatura_id]);
+    }
+    public function filtrar($coluna, $ordem, $pesquisa)
+    {
+        if ($pesquisa != '') {
+            $user = User::find(array('conditions' => array('username LIKE ?', '%' . $pesquisa . '%')));
+            if (isset($user)) {
+                if (isset($coluna)) {
+                    $resultado = Fatura::all(array(
+                        'conditions' => array('cliente_id = ? OR funcionario_id = ? OR id = ?', $user->id, $user->id, $pesquisa),
+                        'order' => $coluna . ' ' . $ordem
+                    ));
+                } else {
+                    $resultado = Fatura::all(array('conditions' => array('cliente_id = ? OR funcionario_id = ? OR id = ?', $user->id, $user->id, $pesquisa)));
+                }
+            } else {
+                if (isset($coluna)) {
+                    $resultado = Fatura::all(array(
+                        'conditions' => array('id = ?', $pesquisa),
+                        'order' => $coluna . ' ' . $ordem
+                    ));
+                } else {
+                    $resultado = Fatura::all(array('conditions' => array('id = ?', $pesquisa)));
+                }
+            }
+        } else {
+            $resultado = Fatura::all(array(
+                'order' => $coluna . ' ' . $ordem
+            ));
+        }
+
+        $this->renderView('Faturas', 'index.php', ['faturas' => $resultado, 'pesquisa' => $pesquisa, $coluna => $ordem]);
     }
     public function emitir($faturaID)
     {
@@ -105,6 +143,6 @@ class FaturaController extends MainController
             $resultado = Fatura::all(array('conditions' => array('id = ?', $parametros['pesquisa'])));
         }
 
-        $this->renderView('Faturas', 'index.php', ['faturas' => $resultado, 'pesquisa' => true]);
+        $this->renderView('Faturas', 'index.php', ['faturas' => $resultado, 'pesquisa' => $parametros['pesquisa']]);
     }
 }

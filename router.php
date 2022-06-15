@@ -96,7 +96,7 @@ switch ($c) {
                 $ivaController->delete($id);
                 break;
             case 'pesquisar':
-                $ivaController->search($_POST);
+                $ivaController->search(['pesquisa' => $_GET['pesquisa']]);
                 break;
         }
         break;
@@ -125,7 +125,7 @@ switch ($c) {
                 $clienteController->delete($id);
                 break;
             case 'pesquisar':
-                $clienteController->search($_POST);
+                $clienteController->search(['pesquisa' => $_GET['pesquisa'], 'place' => $_GET['place']]);
                 break;
         }
         break;
@@ -154,7 +154,10 @@ switch ($c) {
                 $produtoController->delete($id);
                 break;
             case 'pesquisar':
-                $produtoController->search($_POST);
+                $produtoController->search(['pesquisa' => $_GET['pesquisa']]);
+                break;
+            case 'order':
+                $produtoController->filtrar($_GET['col'], $_GET['order'], $_GET['pesquisa']);
                 break;
         }
         break;
@@ -180,9 +183,17 @@ switch ($c) {
                 $loginController->loginFilter(['funcionario', 'admin']);
                 $faturaController->adicionarLinha();
                 break;
+            case 'removerLinha':
+                $loginController->loginFilter(['funcionario', 'admin']);
+                $faturaController->removerLinha($id);
+                break;
             case 'emitir':
                 $loginController->loginFilter(['funcionario', 'admin']);
                 $faturaController->emitir($id);
+                break;
+            case 'order':
+                $loginController->loginFilter(['cliente', 'funcionario', 'admin']);
+                $faturaController->filtrar($_GET['col'], $_GET['order'], $_GET['pesquisa']);
                 break;
             case 'show':
                 $loginController->loginFilter(['cliente', 'funcionario', 'admin']);
@@ -194,11 +205,11 @@ switch ($c) {
                 break;
             case 'pesquisar':
                 $loginController->loginFilter(['admin', 'funcionario', 'cliente']);
-                $faturaController->search($_POST);
+                $faturaController->search(['pesquisa' => $_GET['pesquisa']]);
                 break;
             case 'pesquisarProduto':
                 $loginController->loginFilter(['admin', 'funcionario']);
-                $faturaController->searchProduto($_POST);
+                $faturaController->searchProduto(['pesquisa' => $_GET['pesquisa']]);
                 break;
         }
         break;
@@ -242,7 +253,7 @@ switch ($c) {
                 break;
             case 'pesquisar':
                 $loginController->loginFilter(['admin']);
-                $funcionarioController->search($_POST);
+                $funcionarioController->search([$_GET['pesquisa']]);
                 break;
         }
         break;
@@ -274,6 +285,4 @@ switch ($c) {
                 $loginController->loginFilter(['admin', 'funcionario']);
         }
         break;
-    default:
-        $homeController->Index();
 }

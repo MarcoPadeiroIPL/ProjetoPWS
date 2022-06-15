@@ -6,7 +6,9 @@ class ProdutoController extends MainController
     public function index()
     {
         $produtos = Produto::all();
-        $this->renderView('Produtos', 'index.php', ['produtos' => $produtos, 'pesquisa' => false]);
+
+        $produtos = Produto::all(array('conditions' => array('ativo = ?', true)));
+        $this->renderView('Produtos', 'index.php', ['produtos' => $produtos]);
     }
     public function show($referencia)
     {
@@ -56,15 +58,31 @@ class ProdutoController extends MainController
             $this->redirectToRoute(['c' => 'produto', 'a' => 'edit', 'id' => $referencia]);
         }
     }
+    public function filtrar($coluna, $ordem, $pesquisa)
+    {
+        if ($pesquisa != '') {
+            $resultado = Produto::all(array(
+                'conditions' => array('descricao LIKE ? OR referencia = ? AND ativo = 1', '%' . $pesquisa . '%', $pesquisa),
+                'order' => $coluna . ' ' . $ordem
+            ));
+        } else {
+            $resultado = Produto::all(array(
+                'conditions' => array('ativo = 1', '%' . $pesquisa . '%', $pesquisa),
+                'order' => $coluna . ' ' . $ordem
+            ));
+        }
+
+        $this->renderView('Produtos', 'index.php', ['produtos' => $resultado, 'pesquisa' => $pesquisa, $coluna => $ordem]);
+    }
     public function delete($referencia)
     {
         $produto = Produto::find([$referencia]);
-        $produto->delete();
+        $produto->update_attributes(['ativo' => false]);
         $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
     }
     public function search($parametros)
     {
-        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ?', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
-        $this->renderView('Produtos', 'index.php', ['produtos' => $resultado, 'pesquisa' => true]);
+        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ? ativo = 1', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
+        $this->renderView('Produtos', 'index.php', ['produtos' => $resultado, 'pesquisa' => $parametros['pesquisa']]);
     }
 }

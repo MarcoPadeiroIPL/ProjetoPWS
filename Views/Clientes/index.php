@@ -4,12 +4,15 @@
     <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
         <div class="row" style="margin-top: 5rem;">
             <div class="col-sm-12">
-                <form action="router.php?c=cliente&a=pesquisar" method="POST">
-                    <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar cliente" class="form-control bg-dark text-white">
+                <form action="" method="GET">
+                    <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" value="<?php if (isset($pesquisa)) echo $pesquisa; ?>" placeholder="Pesquisar cliente" class="form-control bg-dark text-white">
                     <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
-                    <?php if ($pesquisa == true) { ?>
+                    <?php if (isset($pesquisa)) { ?>
                         <a href="router.php?c=cliente&a=index" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
                     <?php } ?>
+                    <input type="hidden" name="place" value="index">
+                    <input type="hidden" name="c" value="cliente">
+                    <input type="hidden" name="a" value="pesquisar">
                 </form>
                 <a href="router.php?c=cliente&a=create"><button type="button" style="float:right; margin-bottom:2vh" class="btn bg-dark text-white">+ Novo Cliente</button></a>
                 <table class="table table-stripped shadow">
@@ -54,7 +57,8 @@
                                 <td>
                                     <a href="router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
                                     <a href="router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i></a>
-                                    <a href="router.php?c=cliente&a=delete&id=<?= $cliente->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
+                                    <a href="router.php?c=fatura&a=pesquisar&pesquisa=<?= $cliente->username ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-receipt pl-2" title="Ver todas as faturas"></i></a>
+                                    <a onclick="return confirm('Tem a certeza que quer apagar?');" href="router.php?c=cliente&a=delete&id=<?= $cliente->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         <?php } ?>

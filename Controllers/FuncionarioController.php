@@ -12,7 +12,7 @@ class FuncionarioController extends MainController
     public function index()
     {
         $Funcionarios = User::all(array('conditions' => array('role = ? AND ativo = ?', 'funcionario', true)));
-        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $Funcionarios, 'pesquisa' => false]);
+        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $Funcionarios]);
     }
     public function create()
     {
@@ -107,6 +107,6 @@ class FuncionarioController extends MainController
     public function search($parametros)
     {
         $resultado = User::all(array('conditions' => array('role = ? AND username LIKE ? OR id = ?', 'funcionario', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
-        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $resultado, 'pesquisa' => true]);
+        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $resultado, 'pesquisa' => $parametros['pesquisa']]);
     }
 }

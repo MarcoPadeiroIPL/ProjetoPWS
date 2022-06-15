@@ -11,7 +11,7 @@ class ClienteController extends MainController
     public function index()
     {
         $clientes = User::all(array('conditions' => array('role = ? AND ativo = ?', 'cliente', true)));
-        $this->renderView('Clientes', 'index.php', ['clientes' => $clientes, 'pesquisa' => false]);
+        $this->renderView('Clientes', 'index.php', ['clientes' => $clientes]);
     }
     public function create()
     {
@@ -76,12 +76,12 @@ class ClienteController extends MainController
     }
     public function search($parametros)
     {
-        $resultado = User::all(array('conditions' => array('role = ? AND username LIKE ? OR id = ? AND ativo =', 'cliente', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'], true)));
+        $resultado = User::all(array('conditions' => array('role = ? AND username LIKE ? OR id = ? AND ativo = ?', 'cliente', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'], true)));
 
         if ($parametros['place'] == 'index') {
-            $this->renderView('Clientes', 'index.php', ['clientes' => $resultado, 'pesquisa' => true]);
+            $this->renderView('Clientes', 'index.php', ['clientes' => $resultado, 'pesquisa' => $parametros['pesquisa']]);
         } else {
-            $this->renderView('Faturas', 'escolherCliente.php', ['clientes' => $resultado, 'pesquisa' => true]);
+            $this->renderView('Faturas', 'escolherCliente.php', ['clientes' => $resultado, 'pesquisa' => $parametros['pesquisa']]);
         }
     }
 }

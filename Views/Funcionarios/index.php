@@ -4,12 +4,14 @@
     <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
         <div class="row" style="margin-top: 5rem;">
             <div class="col-sm-12">
-                <form action="router.php?c=funcionario&a=pesquisar" method="POST">
-                    <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar funcionario" class="form-control bg-dark text-white">
+                <form action="" method="GET">
+                    <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" value="<?php if (isset($pesquisa)) echo $pesquisa; ?>" placeholder="Pesquisar funcionario" class="form-control bg-dark text-white">
                     <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
-                    <?php if ($pesquisa == true) { ?>
+                    <?php if (isset($pesquisa)) { ?>
                         <a href="router.php?c=funcionario&a=index" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
                     <?php } ?>
+                    <input type="hidden" name="c" value="funcionario">
+                    <input type="hidden" name="a" value="pesquisar">
                 </form>
                 <a href="router.php?c=funcionario&a=create"><button type="button" style="float:right; margin-bottom:2vh" class="btn bg-dark text-white">+ Novo Funcionario</button></a>
                 <table class="table table-stripped shadow">
@@ -54,7 +56,8 @@
                                 <td>
                                     <a href="router.php?c=funcionario&a=show&id=<?= $funcionario->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
                                     <a href="router.php?c=funcionario&a=edit&id=<?= $funcionario->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i></a>
-                                    <a href="router.php?c=funcionario&a=delete&id=<?= $funcionario->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
+                                    <a href="router.php?c=fatura&a=pesquisar&pesquisa=<?= $funcionario->username ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-receipt pl-2" title="Ver todas as faturas"></i></a>
+                                    <a onclick="return confirm('Tem a certeza que quer apagar?');" href="router.php?c=funcionario&a=delete&id=<?= $funcionario->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
                                 </td>
                             </tr>
                         <?php } ?>
