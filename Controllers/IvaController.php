@@ -56,7 +56,10 @@ class IvaController extends MainController
             $iva->save();
             $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {
-            $this->redirectToRoute(['c' => 'iva', 'a' => 'edit', 'id' => $id]);
+            $error = array(
+                'percentagem' => $iva->errors->on('percentagem')
+            );
+            $this->renderView('IVA', 'edit.php', ['error' => $error, 'iva' => $iva]);
         }
     }
     public function delete($id)

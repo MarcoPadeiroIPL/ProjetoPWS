@@ -12,7 +12,9 @@ class Iva extends ActiveRecord\Model
     );
 
     static $validates_numericality_of = array(
-        array('percentagem', 'only_integer' => true, 'message' => 'Tem que ser numerico')
+        array('percentagem', 'only_integer' => true, 'message' => 'Tem que ser numerico'),
+        array('percentagem', 'less_than_or_equal_to' => 100, 'message' => 'Tem que ser inferior ou igual a 100'),
+        array('percentagem', 'greater_than_or_equal_to' => 0, 'message' => 'Tem que ser superior ou igual a 0')
     );
     // relações com outras tabelas
     static $has_many = array(

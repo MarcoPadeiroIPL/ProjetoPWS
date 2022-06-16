@@ -31,7 +31,11 @@ class ProdutoController extends MainController
             $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
             $ivas = Iva::all(array('conditions' => array('vigor = ?', 1)));
-            $this->renderView('Produtos', 'create.php', ['produto' => $produto, 'ivas' => $ivas]);
+            $error = array(
+                'produto' => $produto->errors->on('produto'),
+                'stock' => $produto->errors->on('stock')
+            );
+            $this->renderView('Produtos', 'create.php', ['produto' => $produto, 'error' => $error, 'ivas' => $ivas]);
         }
     }
     public function edit($referencia)
@@ -53,7 +57,11 @@ class ProdutoController extends MainController
             $produto->save();
             $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
         } else {
-            $this->redirectToRoute(['c' => 'produto', 'a' => 'edit', 'id' => $referencia]);
+            $error = array(
+                'produto' => $produto->errors->on('produto'),
+                'stock' => $produto->errors->on('stock')
+            );
+            $this->renderView('Produtos', 'edit.php', ['error' => $error, 'produto' => $produto]);
         }
     }
     public function filtrar($coluna, $ordem, $pesquisa)
