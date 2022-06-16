@@ -10,10 +10,13 @@ Repositório GitHub: https://github.com/MarcoPadeiroIPL/ProjetoPWS
 
 
 Instruções de uso:
-    -Executar o script mysql 'database.sql' como root
+    -Executar o script mysql 'create_db.sql' como root
     -Mover a pasta para o localhost
     -Iniciar um servidor APACHE
     -Abrir no browser 'http://localhost/your_location/router.php'
+
+    CASO QUEIRA REMOVER A BASE DE DADOS
+    -Executar o script mysql 'delete_db.sql' como root
 
 
 

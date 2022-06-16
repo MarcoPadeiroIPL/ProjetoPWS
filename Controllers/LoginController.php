@@ -59,7 +59,7 @@ class LoginController extends MainController
                 return 0;
             }
         }
-        $this->redirectToRoute(['c' => 'error', 'a' => 'noAccess']);
+        $this->redirectToRoute(['c' => 'home']);
     }
     public function userFilter($id)
     {

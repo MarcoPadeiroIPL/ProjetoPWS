@@ -11,8 +11,8 @@ class FuncionarioController extends MainController
     }
     public function index()
     {
-        $Funcionarios = User::all(array('conditions' => array('role = ? AND ativo = ?', 'funcionario', true)));
-        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $Funcionarios]);
+        $funcionarios = User::all(array('conditions' => array('role = ?', 'funcionario'), 'order' => 'ativo desc'));
+        $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $funcionarios]);
     }
     public function create()
     {
@@ -100,7 +100,24 @@ class FuncionarioController extends MainController
     public function delete($id)
     {
         $funcionario = User::find([$id]);
-        $funcionario->ativo = false;
+        if ($funcionario->ativo) {
+            $funcionario->update_attributes(['ativo' => false]);
+            $this->redirectToRoute(['c' => 'funcionario', 'a' => 'index']);
+        } else {
+            $faturas = Fatura::all(array('conditions' => array('funcionario_id = ?', $id)));
+            if (!(sizeof($faturas) == 0)) {
+                $funcionarios = User::all(array('conditions' => array('role = ?', 'funcionario'), 'order' => 'ativo desc'));
+                $this->renderView('Funcionarios', 'index.php', ['funcionarios' => $funcionarios, 'errors' => $id]);
+            } else {
+                $funcionario->delete();
+                $this->redirectToRoute(['c' => 'funcionario', 'a' => 'index']);
+            }
+        }
+    }
+    public function activate($id)
+    {
+        $funcionario = User::find([$id]);
+        $funcionario->ativo = true;
         $funcionario->save();
         $this->redirectToRoute(['c' => 'funcionario', 'a' => 'index']);
     }

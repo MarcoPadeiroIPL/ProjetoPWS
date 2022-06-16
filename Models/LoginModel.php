@@ -33,26 +33,6 @@ class LoginModel
         } else {
             return 'username'; // devolve que o problema estava no username
         }
-
-        /*foreach ($users as $user) {
-            if ($user->username == $username) {
-                if (password_verify($password, $user->password)) {
-                }
-                $res = true;
-                $role = $user->role;
-                $id = $user->id;
-            }
-        }
-
-        if ($res) {
-            // atribuição de valores à sessão atual
-            $_SESSION['username'] = $username; // armazena uma string que representa o username
-            $_SESSION['role'] = $role; // armazena a role da sessão atual numa string 
-            $_SESSION['id'] = $id; // armazena a role da sessão atual numa string 
-            $_SESSION['autenticado'] = (isset($_SESSION['username']) && $username == $_SESSION['username']); // armazena uma boolean
-        }
-        // devolve uma bool que representa o resultado do login
-        return $res;*/
     }
 
     public function isLoggedin()

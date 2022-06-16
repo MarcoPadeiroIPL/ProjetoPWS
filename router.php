@@ -127,6 +127,9 @@ switch ($c) {
             case 'pesquisar':
                 $clienteController->search(['pesquisa' => $_GET['pesquisa'], 'place' => $_GET['place']]);
                 break;
+            case 'activate':
+                $clienteController->activate($id);
+                break;
         }
         break;
     case 'produto':
@@ -158,6 +161,9 @@ switch ($c) {
                 break;
             case 'order':
                 $produtoController->filtrar($_GET['col'], $_GET['order'], $_GET['pesquisa']);
+                break;
+            case 'activate':
+                $produtoController->activate($id);
                 break;
         }
         break;
@@ -254,6 +260,10 @@ switch ($c) {
             case 'pesquisar':
                 $loginController->loginFilter(['admin']);
                 $funcionarioController->search([$_GET['pesquisa']]);
+                break;
+            case 'activate':
+                $loginController->loginFilter(['admin']);
+                $funcionarioController->activate($id);
                 break;
         }
         break;

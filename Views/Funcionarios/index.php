@@ -45,6 +45,9 @@
                     <tbody>
                         <?php foreach ($funcionarios as $funcionario) { ?>
                             <tr>
+                                <?php if (!$funcionario->ativo) echo '<tr class="text-secondary">'; ?>
+                                <?php if (isset($errors) && $errors == $funcionario->id) echo '<script>alert("Existem faturas associadas a este funcionario!");</script>'; ?>
+                                <?php if ($funcionario->ativo && !isset($erros)) echo '<tr>'; ?>
                                 <td><?= $funcionario->id ?></td>
                                 <td><?= $funcionario->username ?></td>
                                 <td><?= $funcionario->email ?></td>
@@ -54,6 +57,9 @@
                                 <td><?= $funcionario->codpostal ?></td>
                                 <td><?= $funcionario->localidade ?></td>
                                 <td>
+                                    <?php if (!$funcionario->ativo) { ?>
+                                        <a href="router.php?c=funcionario&a=activate&id=<?= $funcionario->id ?>" class="text-black" title="Ativar"><i class="fs-4 bi bi-check"></i></a>
+                                    <?php } ?>
                                     <a href="router.php?c=funcionario&a=show&id=<?= $funcionario->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
                                     <a href="router.php?c=funcionario&a=edit&id=<?= $funcionario->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i></a>
                                     <a href="router.php?c=fatura&a=pesquisar&pesquisa=<?= $funcionario->username ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-receipt pl-2" title="Ver todas as faturas"></i></a>

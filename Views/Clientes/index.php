@@ -45,21 +45,26 @@
                     </thead>
                     <tbody>
                         <?php foreach ($clientes as $cliente) { ?>
-                            <tr>
-                                <td><?= $cliente->id ?></td>
-                                <td><?= $cliente->username ?></td>
-                                <td><?= $cliente->email ?></td>
-                                <td><?= $cliente->telefone ?></td>
-                                <td><?= $cliente->nif ?></td>
-                                <td><?= $cliente->morada ?></td>
-                                <td><?= $cliente->codpostal ?></td>
-                                <td><?= $cliente->localidade ?></td>
-                                <td>
-                                    <a href="router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
-                                    <a href="router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i></a>
-                                    <a href="router.php?c=fatura&a=pesquisar&pesquisa=<?= $cliente->username ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-receipt pl-2" title="Ver todas as faturas"></i></a>
-                                    <a onclick="return confirm('Tem a certeza que quer apagar?');" href="router.php?c=cliente&a=delete&id=<?= $cliente->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
-                                </td>
+                            <?php if (!$cliente->ativo) echo '<tr class="text-secondary">'; ?>
+                            <?php if (isset($errors) && $errors == $cliente->id) echo '<script>alert("Existem faturas associadas a este cliente!");</script>'; ?>
+                            <?php if ($cliente->ativo && !isset($erros)) echo '<tr>'; ?>
+                            <td><?= $cliente->id ?></td>
+                            <td><?= $cliente->username ?></td>
+                            <td><?= $cliente->email ?></td>
+                            <td><?= $cliente->telefone ?></td>
+                            <td><?= $cliente->nif ?></td>
+                            <td><?= $cliente->morada ?></td>
+                            <td><?= $cliente->codpostal ?></td>
+                            <td><?= $cliente->localidade ?></td>
+                            <td>
+                                <?php if (!$cliente->ativo) { ?>
+                                    <a href="router.php?c=cliente&a=activate&id=<?= $cliente->id ?>" class="text-black" title="Ativar"><i class="fs-4 bi bi-check"></i></a>
+                                <?php } ?>
+                                <a href="router.php?c=cliente&a=show&id=<?= $cliente->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
+                                <a href="router.php?c=cliente&a=edit&id=<?= $cliente->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil pl-2" title="Editar"></i></a>
+                                <a href="router.php?c=fatura&a=pesquisar&pesquisa=<?= $cliente->username ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-receipt pl-2" title="Ver todas as faturas"></i></a>
+                                <a onclick="return confirm('Tem a certeza que quer apagar?');" href="router.php?c=cliente&a=delete&id=<?= $cliente->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
+                            </td>
                             </tr>
                         <?php } ?>
                     </tbody>

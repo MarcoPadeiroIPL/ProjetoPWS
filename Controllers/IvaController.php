@@ -63,7 +63,7 @@ class IvaController extends MainController
     {
         $iva = Iva::find([$id]);
         $produtos = Produto::find(array('conditions' => array('iva_id = ?', $id)));
-        if (is_null($produtos)) {
+        if (sizeof($produtos) == 0) {
             $iva->delete();
             $this->redirectToRoute(['c' => 'iva', 'a' => 'index']);
         } else {

@@ -10,7 +10,7 @@ class ClienteController extends MainController
     }
     public function index()
     {
-        $clientes = User::all(array('conditions' => array('role = ? AND ativo = ?', 'cliente', true)));
+        $clientes = User::all(array('conditions' => array('role = ?', 'cliente'), 'order' => 'ativo desc'));
         $this->renderView('Clientes', 'index.php', ['clientes' => $clientes]);
     }
     public function create()
@@ -70,7 +70,24 @@ class ClienteController extends MainController
     public function delete($id)
     {
         $cliente = User::find([$id]);
-        $cliente->ativo = false;
+        if ($cliente->ativo) {
+            $cliente->update_attributes(['ativo' => false]);
+            $this->redirectToRoute(['c' => 'cliente', 'a' => 'index']);
+        } else {
+            $faturas = Fatura::all(array('conditions' => array('cliente_id = ?', $id)));
+            if (!(sizeof($faturas) == 0)) {
+                $clientes = User::all(array('conditions' => array('role = ?', 'cliente'), 'order' => 'ativo desc'));
+                $this->renderView('Clientes', 'index.php', ['clientes' => $clientes, 'errors' => $id]);
+            } else {
+                $cliente->delete();
+                $this->redirectToRoute(['c' => 'cliente', 'a' => 'index']);
+            }
+        }
+    }
+    public function activate($id)
+    {
+        $cliente = User::find([$id]);
+        $cliente->ativo = true;
         $cliente->save();
         $this->redirectToRoute(['c' => 'cliente', 'a' => 'index']);
     }

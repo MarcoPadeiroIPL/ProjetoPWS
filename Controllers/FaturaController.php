@@ -43,7 +43,7 @@ class FaturaController extends MainController
     public function register($fatura_id)
     {
         $fatura = Fatura::find([$fatura_id]);
-        $produtos = Produto::all(array('conditions' => array('stock > 0')));
+        $produtos = Produto::all(array('conditions' => array('stock > 0 AND ativo = 1')));
         $this->renderView('Faturas', 'registar.php', ['produtos' => $produtos, 'fatura' => $fatura]);
     }
     public function searchProduto($parametros)
@@ -68,6 +68,8 @@ class FaturaController extends MainController
     {
         $linha = LinhaFatura::find([$id]);
         $fatura_id = $linha->fatura_id;
+        $linha->produto->stock += $linha->quantidade;
+        $linha->produto->save();
         $linha->delete();
         $this->redirectToRoute(['c' => 'fatura', 'a' => 'register', 'id' => $fatura_id]);
     }

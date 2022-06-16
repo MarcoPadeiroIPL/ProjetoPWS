@@ -55,18 +55,23 @@
                     </thead>
                     <tbody>
                         <?php foreach ($produtos as $produto) { ?>
-                            <tr>
-                                <td><?= $produto->referencia ?></td>
-                                <td><?= $produto->descricao ?></td>
-                                <td><?= $produto->preco ?>€</td>
-                                <td><?= $produto->stock ?></td>
-                                <td><?= $produto->iva->descricao ?></td>
-                                <td><?= $produto->iva->percentagem ?>%</td>
-                                <td>
-                                    <a href="router.php?c=produto&a=show&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
-                                    <a href="router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil" title="Editar"></i></a>
-                                    <a onclick="return confirm('Tem a certeza que quer apagar?');" href="router.php?c=produto&a=delete&id=<?= $produto->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
-                                </td>
+                            <?php if (!$produto->ativo) echo '<tr class="text-secondary">'; ?>
+                            <?php if (isset($errors) && $errors == $produto->referencia) echo '<script>alert("Existem faturas associadas a este produto!");</script>'; ?>
+                            <?php if ($produto->ativo && !isset($erros)) echo '<tr>'; ?>
+                            <td><?= $produto->referencia ?></td>
+                            <td><?= $produto->descricao ?></td>
+                            <td><?= $produto->preco ?>€</td>
+                            <td><?= $produto->stock ?></td>
+                            <td><?= $produto->iva->descricao ?></td>
+                            <td><?= $produto->iva->percentagem ?>%</td>
+                            <td>
+                                <?php if (!$produto->ativo) { ?>
+                                    <a href="router.php?c=produto&a=activate&id=<?= $produto->id ?>" class="text-black" title="Ativar"><i class="fs-4 bi bi-check"></i></a>
+                                <?php } ?>
+                                <a href="router.php?c=produto&a=show&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-eye"></i></a>
+                                <a href="router.php?c=produto&a=edit&id=<?= $produto->id ?>" class="text-black" title="Mostrar"><i class="fs-4 bi bi-pencil" title="Editar"></i></a>
+                                <a onclick="return confirm('Tem a certeza que quer apagar?');" href="router.php?c=produto&a=delete&id=<?= $produto->id ?>" class="text-black" title="Apagar"><i class="fs-4 bi bi-trash"></i></a>
+                            </td>
                             </tr>
                         <?php } ?>
                     </tbody>

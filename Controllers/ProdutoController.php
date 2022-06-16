@@ -5,9 +5,7 @@ class ProdutoController extends MainController
 {
     public function index()
     {
-        $produtos = Produto::all();
-
-        $produtos = Produto::all(array('conditions' => array('ativo = ?', true)));
+        $produtos = Produto::all(array('order' => 'ativo desc'));
         $this->renderView('Produtos', 'index.php', ['produtos' => $produtos]);
     }
     public function show($referencia)
@@ -62,12 +60,11 @@ class ProdutoController extends MainController
     {
         if ($pesquisa != '') {
             $resultado = Produto::all(array(
-                'conditions' => array('descricao LIKE ? OR referencia = ? AND ativo = 1', '%' . $pesquisa . '%', $pesquisa),
+                'conditions' => array('descricao LIKE ? OR referencia = ?', '%' . $pesquisa . '%', $pesquisa),
                 'order' => $coluna . ' ' . $ordem
             ));
         } else {
             $resultado = Produto::all(array(
-                'conditions' => array('ativo = 1', '%' . $pesquisa . '%', $pesquisa),
                 'order' => $coluna . ' ' . $ordem
             ));
         }
@@ -77,12 +74,29 @@ class ProdutoController extends MainController
     public function delete($referencia)
     {
         $produto = Produto::find([$referencia]);
-        $produto->update_attributes(['ativo' => false]);
+        if ($produto->ativo) {
+            $produto->update_attributes(['ativo' => false]);
+            $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
+        } else {
+            $linhas = LinhaFatura::all(array('conditions' => array('produto_id = ?', $referencia)));
+            if (!(sizeof($linhas) == 0)) {
+                $this->renderView('Produtos', 'index.php', ['produtos' => Produto::all(array('order' => 'ativo desc')), 'errors' => $referencia]);
+            } else {
+                $produto->delete();
+                $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
+            }
+        }
+    }
+    public function activate($id)
+    {
+        $produto = Produto::find([$id]);
+        $produto->ativo = true;
+        $produto->save();
         $this->redirectToRoute(['c' => 'produto', 'a' => 'index']);
     }
     public function search($parametros)
     {
-        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ? ativo = 1', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
+        $resultado = Produto::all(array('conditions' => array('descricao LIKE ? OR referencia = ?', '%' . $parametros['pesquisa'] . '%', $parametros['pesquisa'])));
         $this->renderView('Produtos', 'index.php', ['produtos' => $resultado, 'pesquisa' => $parametros['pesquisa']]);
     }
 }
