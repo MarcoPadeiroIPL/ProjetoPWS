@@ -4,11 +4,13 @@
 <div class="row" style="height:95.3245vh; background-color: #e8e8e9;">
     <div class="row" style="margin-top: 5rem;">
         <div class="col-sm-12">
-            <form action="router.php?c=cliente&a=pesquisar" method="POST">
+            <form action="router.php?c=cliente&a=pesquisar" method="GET">
                 <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" placeholder="Pesquisar cliente" class="form-control bg-dark text-white">
+                <input type="hidden" name="c" value="cliente">
+                <input type="hidden" name="a" value="pesquisar">
                 <input type="hidden" name="place" value="escolherCliente">
                 <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
-                <?php if ($pesquisa == true) { ?>
+                <?php if (isset($pesquisa)) { ?>
                     <a href="router.php?c=fatura&a=escolher" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
                 <?php } ?>
             </form>

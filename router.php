@@ -285,4 +285,6 @@ switch ($c) {
                 $loginController->loginFilter(['admin', 'funcionario']);
         }
         break;
+    default:
+        $homeController->Index();
 }
