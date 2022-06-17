@@ -24,7 +24,6 @@ require_once 'Controllers/HomeController.php';
 require_once 'Controllers/DashboardController.php';
 require_once 'Controllers/IvaController.php';
 require_once 'Controllers/ClienteController.php';
-require_once 'Controllers/ErrorController.php';
 require_once 'Controllers/ProdutoController.php';
 require_once 'Controllers/FaturaController.php';
 require_once 'Controllers/FuncionarioController.php';
@@ -42,7 +41,6 @@ $faturaController = new FaturaController();
 $funcionarioController = new FuncionarioController();
 $empresaController = new EmpresaController();
 $userController = new UserController();
-$errorController = new ErrorController();
 
 switch ($c) {
     case 'home':
@@ -63,13 +61,6 @@ switch ($c) {
     case 'dashboard':
         $loginController->loginFilter([$a]);
         $dashboardController->loggedInView($a);
-        break;
-    case 'error':
-        switch ($a) {
-            case 'noAccess':
-                $errorController->noAccess();
-                break;
-        }
         break;
     case 'iva':
         $loginController->loginFilter(['funcionario', 'admin']);
