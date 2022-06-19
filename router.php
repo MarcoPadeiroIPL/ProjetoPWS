@@ -206,7 +206,7 @@ switch ($c) {
                 break;
             case 'pesquisarProduto':
                 $loginController->loginFilter(['admin', 'funcionario']);
-                $faturaController->searchProduto(['pesquisa' => $_GET['pesquisa']]);
+                $faturaController->searchProduto(['pesquisa' => $_GET['pesquisa'], 'fatura_id' => $_GET['fatura_id']]);
                 break;
         }
         break;

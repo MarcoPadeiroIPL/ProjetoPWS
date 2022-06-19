@@ -6,10 +6,12 @@
         <div class="col-sm-12">
             <div class="row">
                 <div class="col-5">
-                    <form action="router.php?c=fatura&a=pesquisarProduto" method="POST">
+                    <form action="" method="GET">
                         <input type="text" name="pesquisa" style="float:left; margin-bottom:2vh; width:15vw" value="<?php if (isset($pesquisa)) echo $pesquisa ?>" placeholder="Pesquisar produto" class="form-control bg-dark text-white">
                         <button type="submit" style="float:left; margin-bottom:2vh;" class="btn btn-dark"><i class="bi bi-search"></i></button>
                         <input type="hidden" name="fatura_id" value="<?= $fatura->id ?>">
+                        <input type="hidden" name="c" value="fatura">
+                        <input type="hidden" name="a" value="pesquisarProduto">
                         <?php if (isset($pesquisa)) { ?>
                             <a href="router.php?c=fatura&a=register&id=<?= $fatura->id ?>" style="float:left; margin-bottom:2vh;">Limpar Pesquisa</a>
                         <?php } ?>
